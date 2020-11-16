@@ -31,6 +31,7 @@
         border-radius: 5px;
         font-size: 18pt;
         padding: 3px;
+        text-align: center;
     }
 
     #div_title {
@@ -92,7 +93,7 @@
                 class="a_btn" href="">Materialize</a>
         </div>
         <div id="right_side" class="side"><img src="{% static 'html_css/treats2.jpg' %}" alt="Bootstrap"><a
-                class="a_btn" href="">Bootstrap</a>
+                class="a_btn" href="{% url 'html_css:bootstrap_index' %}">Bootstrap</a>
         </div>
     </div>
 </body>

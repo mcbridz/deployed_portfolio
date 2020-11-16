@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!--Vue-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- axios -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <title>Quiz</title>
+
+    <!--Custom CSS-->
+    <link href="../../style.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+
+    <style>
+        .side-nav {
+            border: 1px solid black;
+            border-radius: 3px;
+            width: max-content;
+            background-color: rgba(238, 239, 240, 0.85);
+        }
+
+        .side-nav:hover {
+            background-color: rgba(248, 249, 250, 0.85);
+            cursor: pointer;
+        }
+
+        #display {
+            display: flex;
+            flex-direction: row;
+        }
+
+        #q_and_a {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #answer_display {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="../index.html">Home<span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown link
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="../unit-converter/unit-converter.html">Unit Converter</a>
+                        <a class="dropdown-item"
+                            href="./random-password-generator/random-password-generator.html">Random Password
+                            Generator</a>
+                        <a class="dropdown-item" href="../number-to-phrase/number-to-phrase.html">Number To Phrase</a>
+                        <a class="dropdown-item" href="../grading/grading.html">Grading</a>
+
+                        <a class="dropdown-item" href="../to-do-list/to-do-list.html">To-Do List</a>
+                        <a class="dropdown-item" href="../rotN/rotN.html">rotN Encryption</a>
+                        <a class="dropdown-item" href="../axios-ajax-cats/cats.html">Axios/Ajax/Vue Demo</a>
+                        <a class="dropdown-item" href="../weather/weather.html">Weather</a>
+                        <a class="dropdown-item" href="./quiz.html">Weather</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div id="app">
+            <div v-if="!game_started">
+                <button class="btn btn-primary" v-on:click="changeGameType">Change Game Type</button>
+                <div v-if="!wwtbam_sim">
+                    <div class="form-group">
+                        <label for="num_questions">Manual</label>
+                        <input type="number" class="form-control" id="num_questions" placeholder="Questions"
+                            v-model="num_questions" />
+                    </div>
+                    <div class="form-group">
+                        <label for="categories">Categories</label>
+                        <select class="form-control" id="categories" v-model="category">
+                            <option value="any">Any Category</option>
+                            <option value="9">General Knowledge</option>
+                            <option value="10">Entertainment: Books</option>
+                            <option value="11">Entertainment: Film</option>
+                            <option value="12">Entertainment: Music</option>
+                            <option value="13">Entertainment: Musicals &amp; Theatres</option>
+                            <option value="14">Entertainment: Television</option>
+                            <option value="15">Entertainment: Video Games</option>
+                            <option value="16">Entertainment: Board Games</option>
+                            <option value="17">Science &amp; Nature</option>
+                            <option value="18">Science: Computers</option>
+                            <option value="19">Science: Mathematics</option>
+                            <option value="20">Mythology</option>
+                            <option value="21">Sports</option>
+                            <option value="22">Geography</option>
+                            <option value="23">History</option>
+                            <option value="24">Politics</option>
+                            <option value="25">Art</option>
+                            <option value="26">Celebrities</option>
+                            <option value="27">Animals</option>
+                            <option value="28">Vehicles</option>
+                            <option value="29">Entertainment: Comics</option>
+                            <option value="30">Science: Gadgets</option>
+                            <option value="31">Entertainment: Japanese Anime &amp; Manga</option>
+                            <option value="32">Entertainment: Cartoon &amp; Animations</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="trivia_difficulty">Select Difficulty: </label>
+                        <select id="trivia_difficulty" class="form-control" v-model="difficulty">
+                            <option value="any">Any Difficulty</option>
+                            <option value="easy">Easy</option>
+                            <option value="medium">Medium</option>
+                            <option value="hard">Hard</option>
+                        </select>
+                    </div>
+                </div>
+                <div v-if="wwtbam_sim">
+                    <span><b>Who Wants To Be A Millionaire! (coming soon!)</b></span>
+                </div>
+                <button class="btn btn-primary" v-on:click="startGame">Start Game</button>
+            </div>
+            <div id="display" v-if="game_started">
+                <div>
+                    <ul class="nav flex-column">
+                        <li class="nav-item side-nav" v-for="(question, index) in questions"
+                            v-on:click="changeQuestion(index)">
+                            <div>Question {{index+1}}</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="container" id="q_and_a">
+                    <div class="container" id="question">
+                        <span>{{display.question}}</span>
+                    </div>
+                    <div class="container" id="answer_display">
+                        <div class="radio_group">
+                            <input type="radio" id="answer1" v-bind:value=display.answer1 v-model="selected_answer">
+                            <label for="answer1">{{display.answer1}}</label>
+                        </div>
+                        <div class="radio_group">
+                            <input type="radio" id="answer2" v-bind:value=display.answer2 v-model="selected_answer">
+                            <label for="answer1">{{display.answer2}}</label>
+                        </div>
+                        <div class="radio_group">
+                            <input type="radio" id="answer3" v-bind:value=display.answer3 v-model="selected_answer">
+                            <label for="answer1">{{display.answer3}}</label>
+                        </div>
+                        <div class="radio_group">
+                            <input type="radio" id="answer4" v-bind:value=display.answer4 v-model="selected_answer">
+                            <label for="answer1">{{display.answer4}}</label>
+                        </div>
+                        <button class="btn btn-primary" id="button_submit" v-on:click="checkAnswer()">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function randChoice(arr) {
+            if (arr.length != 0) {
+                return arr[Math.floor(Math.random() * arr.length)]
+            }
+            return null
+        }
+        //test code for randChoice
+        // for (let i = 0; i < 5; ++i) {
+        //     console.log(randChoice(["a", "b", "c"]))
+        // }
+        function shuffle(arr) {
+            let ctr = arr.length;
+            let temp;
+            let index;
+            while (ctr > 0) {
+                index = Math.floor(Math.random() * ctr)
+                ctr--
+                temp = arr[ctr]
+                arr[ctr] = arr[index]
+                arr[index] = temp
+            }
+            return arr;
+        }
+        // const myArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+        // console.log(shuffle(myArray));
+
+        let app = new Vue({
+            el: "#app",
+            data: {
+                game_started: false,
+                wwtbam_sim: false,
+                num_questions: "",
+                category: "any",
+                difficulty: "any",
+                questions: [],
+                display: {
+                    current_question_index: 0,
+                    question: "",
+                    answer1: "",
+                    answer2: "",
+                    answer3: "",
+                    answer4: "",
+                    correct_answer: "",
+                },
+                selected_answer: "",
+            },
+            created: function () {
+
+            },
+            methods: {
+                changeGameType: function () {
+                    if (this.wwtbam_sim) {
+                        this.wwtbam_sim = false
+                        return
+                    }
+                    this.wwtbam_sim = true
+                },
+                changeQuestion: function (index) {
+
+                },
+                startGame: function () {
+                    axios({
+                        method: "get",
+                        url: 'https://opentdb.com/api.php',
+                        params: {
+                            amount: this.num_questions,
+                            category: this.category,
+                            difficulty: this.difficulty,
+                            type: "multiple"
+                        },
+                    }).then((response) => {
+                        console.log(response.data)
+                        if (response.data.response_code == 0) {
+                            let results = response.data.results
+                            for (let i = 0; i < results.length; ++i) {
+                                let tmp_question = {
+                                    category: results[i].category,
+                                    difficulty: results[i].difficulty,
+                                    question: results[i].question,
+                                    answer: results[i].correct_answer,
+                                    wrong_answers: [],
+                                    arr_answers: [],
+                                    answered: false,
+                                    selected_answer: "",
+                                }
+                                let incorrect_answers = results[i].incorrect_answers
+                                for (let r = 0; r < incorrect_answers.length; ++r) {
+                                    tmp_question.wrong_answers.push(incorrect_answers[r])
+                                }
+                                tmp_question.arr_answers = tmp_question.wrong_answers.slice()
+                                tmp_question.arr_answers.push(tmp_question.answer)
+                                tmp_question.arr_answers = shuffle(tmp_question.arr_answers)
+                                console.log(tmp_question)
+                                this.questions.push(tmp_question)
+                            }
+                            let tmp_question = this.questions[0]
+                            this.display.answer1 = tmp_question.arr_answers[0]
+                            this.display.answer2 = tmp_question.arr_answers[1]
+                            this.display.answer3 = tmp_question.arr_answers[2]
+                            this.display.answer4 = tmp_question.arr_answers[3]
+                            this.display.question = tmp_question.question
+                            this.display.correct_answer = tmp_question.answer
+                            this.game_started = true
+                        }
+                    })
+                },
+                checkAnswer: function () {
+                    this.questions[this.display.current_question_index].selected_answer = this.selected_answer
+                    if (this.selected_answer === this.display.correct_answer) {
+                        //modal with celebration picture
+                        //make side-nav button green
+                        alert("Correct!")
+                    } else {
+                        //modal with disappointed picture
+                        //make side-nave button red
+                        alert("Incorrect!")
+                    }
+                }
+            }
+        })
+    </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

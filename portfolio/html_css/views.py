@@ -5,4 +5,10 @@ from django.http import HttpResponse
 def landing(request):
     return render(request, 'html_css/landing.html')
 
-# Create your views here.
+
+def bootstrap_index(request):
+    return render(request, 'html_css/bootstrap_index.html')
+
+
+def cats(request):
+    return render(request, 'html_css/cats.html')
