@@ -6,6 +6,7 @@ __pycache__/
 # C extensions
 *.so
 
+
 # Distribution / packaging
 .Python
 build/
@@ -129,3 +130,4 @@ dmypy.json
 .pyre/
 
 secrets.py
+secrets.js

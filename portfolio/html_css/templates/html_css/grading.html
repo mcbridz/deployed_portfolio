@@ -1,103 +1,85 @@
-<!doctype html>
-<html lang="en">
+{% extends 'html_css/bootstrap_base.html' %}
+{% load static %}
+{% block title %}Grading{% endblock %}
+{% block style %}
+<style>
+    #num_scores {
+        margin-right: 5%;
+    }
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    #instructions {
+        margin-top: 3%;
+        margin-bottom: 3%;
+    }
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    #score_flds {
+        margin-top: 3%;
+    }
 
-    <!--Custom CSS-->
-    <link href="../../style.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
-    <style>
-        #num_scores {
-            margin-right: 5%;
-        }
+    .row {
+        display: flex;
+        justify-content: flex-end;
+    }
 
-        #instructions {
-            margin-top: 3%;
-            margin-bottom: 3%;
-        }
+    .row>button {
+        margin: 2px;
+    }
 
-        #score_flds {
-            margin-top: 3%;
-        }
+    .button {
+        margin: 2px;
+    }
 
-        .row {
-            justify-content: left;
-        }
-    </style>
+    #score_div {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 5px;
+    }
 
-    <title>Grading</title>
-</head>
+    .col {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 5px;
+    }
+</style>
+{% endblock %}
 
-<body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="../../index.html">Home<span class="sr-only"></span></a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown link
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="../unit-converter/unit-converter.html">Unit Converter</a>
-                        <a class="dropdown-item"
-                            href="../random-password-generator/random-password-generator.html">Random Password
-                            Generator</a>
-                        <a class="dropdown-item" href="../number-to-phrase/number-to-phrase.html">Number To Phrase</a>
-                        <a class="dropdown-item" href="./grading.html">Grading</a>
-                        <a class="dropdown-item" href="../to-do-list/to-do-list.html">To-Do List</a>
-                        <a class="dropdown-item" href="../rotN/rotN.html">rotN Encryption</a>
-                        <a class="dropdown-item" href="../axios-ajax-cats/cats.html">Axios/Ajax/Vue Demo</a>
-                        <a class="dropdown-item" href="../weather/weather.html">Weather</a>
-                        <a class="dropdown-item" href="../quiz/quiz.html">Quiz</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    <div class="container" id="instructions">
-        Instructions:
-        Enter number of scores to grade, then click "Generate!". If demonstrating code, click
-        "Randomize Scores!", to fill the score fields, then click "Grade!" to evaluate scores.
-    </div>
-    <div class="container" id="cont_scores">
+{% block body %}
+{% include 'html_css/bootstrap_base_nav.html' %}
+<div class="container" id="instructions">
+    Instructions:
+    Enter number of scores to grade, then click "Generate!". If demonstrating code, click
+    "Randomize Scores!", to fill the score fields, then click "Grade!" to evaluate scores.
+</div>
+<div class="container" id="cont_scores">
+    <div id="score_div">
         <input id="num_scores" type="number" placeholder="Number of Scores" \>
-        <button type="button" class="btn btn-secondary" id="btn_scores">Generate!</button>
-        <button type="button" class="btn btn-secondary" id="scores_rnd" hidden>Randomize Scores!</button>
-        <button type="button" class="btn btn-secondary" id="grade" hidden>Grade!</button>
-        <button type="button" class="btn btn-secondary" id="clear" hidden>Clear!</button>
     </div>
-    <div class="container" id="div_button"></div>
-    <div class="container" id="score_flds"></div>
-
-    <!--Custom JavaScript-->
-    <script src="grading.js"></script>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
-</body>
-
-</html>
+    <div class="row container">
+        <div class="col">
+            <button type="button" class="btn btn-secondary" id="btn_scores">Generate!</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-secondary" id="scores_rnd" hidden>Gen Scores!</button>
+        </div>
+    </div>
+    <div class="row container">
+        <div class="col">
+            <button type="button" class="btn btn-secondary" id="grade" hidden>Grade!</button>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-secondary" id="clear" hidden>Clear!</button>
+        </div>
+    </div>
+    <div class="row container">
+    </div>
+    <div class="row container">
+    </div>
+</div>
+<div class="container" id="div_button"></div>
+<div class="container" id="score_flds"></div>
+{% endblock %}
+{% block javascript %}
+<!--Custom JavaScript-->
+<script src="{% static 'html_css/grading.js' %}"></script>
+{% endblock %}

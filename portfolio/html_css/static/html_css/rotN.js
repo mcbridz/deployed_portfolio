@@ -11,13 +11,25 @@ function get_good_index(index, arr) {
     }
     return index % arr.length
 }
+// localStorage.setItem("data", JSON.stringify(this.data))
+function save_data(data, dest) {
+    localStorage.setItem(dest, JSON.stringify(data))
+}
 
 let app = new Vue({
     el: '#app',
+    delimiters: ['[[', ']]'],
     data: {
         rotation: 0,
         plain_text: "",
         cypher_text: "",
+        data: [],
+    },
+    created: function () {
+        this.data = JSON.parse(localStorage.getItem("data"))
+        if (this.data === null) {
+            this.data = []
+        }
     },
     methods: {
         encrypt_text: function () {
@@ -59,6 +71,20 @@ let app = new Vue({
         clear_text: function () {
             this.plain_text = ""
             this.cypher_text = ""
+        },
+        save_text: function () {
+            let tmp_data = { pt: this.plain_text, ct: this.cypher_text, rv: this.rotation }
+            this.data.push(tmp_data)
+            localStorage.setItem("data", JSON.stringify(this.data))
+        },
+        load: function (index) {
+            this.plain_text = this.data[index].pt
+            this.cypher_text = this.data[index].ct
+            this.rotation = this.data[index].rv
+        },
+        delete_item: function (index) {
+            this.data.splice(index, 1)
+            save_data(this.data, "data")
         }
     }
 })

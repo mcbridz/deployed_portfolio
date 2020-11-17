@@ -1,204 +1,134 @@
-<!doctype html>
-<html lang="en">
+{% extends 'html_css/bootstrap_base.html' %}
+{% load static %}
+{% block title %}rotN{% endblock %}
+{% block style %}
+<!--Vue-->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<style>
+    #instructions {
+        margin-bottom: 3%;
+        text-align: center;
+    }
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    .form-group {
+        display: flex;
+        justify-content: center !important;
+    }
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    .row {
+        justify-content: center !important;
+    }
 
-    <!--Vue-->
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    #input_rotation {
+        width: 50px;
+    }
 
+    .log-item div {
+        text-align: left;
+    }
 
-    <!--Custom CSS-->
-    <link href="../../style.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+    .log-text {
+        width: 100%;
+        margin-left: 3%;
+    }
 
-    <style>
-        #instructions {
-            margin-bottom: 3%;
-            text-align: center;
+    .log-item {
+        border-bottom: 1px solid black;
+        padding-bottom: 1%;
+    }
+
+    button {
+        margin-bottom: 4px;
+    }
+
+    @media only screen and (max-width: 992px) {
+        .input-group-text {
+            display: none;
         }
 
-        .form-group {
-            display: flex;
-            justify-content: center !important;
-        }
-
-        .row {
-            justify-content: center !important;
-        }
-
-        #input_rotation {
-            width: 50px;
-        }
-
-        .log-item div {
-            text-align: left;
-        }
-
-        .log-text {
+        .input-group-prepend .form-control {
             width: 100%;
-            margin-left: 3%;
         }
 
-        .log-item {
-            border-bottom: 1px solid black;
-            padding-bottom: 1%;
+        #input_fields {
+            flex-direction: column;
+            align-items: center;
         }
 
-        button {
-            margin-bottom: 4px;
-        }
-
-        @media only screen and (max-width: 992px) {
-            .input-group-text {
-                display: none;
-            }
-
-            .input-group-prepend .form-control {
-                width: 100%;
-            }
-
-            #input_fields {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            /* #app {
+        /* #app {
                 padding: 12px;
             } */
-        }
-    </style>
+    }
+</style>
+{% endblock %}
 
-    <title>rotN</title>
-</head>
+{% block body %}
+{% include 'html_css/bootstrap_base_nav.html' %}
 
-<body>
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="../../index.html">Home<span class="sr-only"></span></a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown link
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-item" href="../unit-converter/unit-converter.html">Unit Converter</a>
-                        <a class="dropdown-item"
-                            href="../random-password-generator/random-password-generator.html">Random Password
-                            Generator</a>
-                        <a class="dropdown-item" href="../number-to-phrase/number-to-phrase.html">Number To Phrase</a>
-                        <a class="dropdown-item" href="../grading/grading.html">Grading</a>
-
-                        <a class="dropdown-item" href="../to-do-list/to-do-list.html">To-Do List</a>
-                        <a class="dropdown-item" href="./rotN.html">rotN Encryption</a>
-                        <a class="dropdown-item" href="../axios-ajax-cats/cats.html">Axios/Ajax/Vue Demo</a>
-                        <a class="dropdown-item" href="../weather/weather.html">Weather</a>
-                        <a class="dropdown-item" href="../quiz/quiz.html">Quiz</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="container" id="instructions">Type text into appropriate form, then click the appropriate button to
-        convert between plain-text and cypher-text based on a long-string rotation of concatinated
-        <b>[A-Z][a-z][0-9][!@#$%^&*()-_=+[{]}|;:'\"\\/,.? ]</b>(angle brackets are included).</div>
-    <div id="app">
-        <div class="container form-group" id="div_rotation">
-            <input v-on:input="encrypt_text" v-model="rotation" type="number" id="input_rotation" />
-        </div>
-        <div class="container form-group">
-            <div class="row" id="input_fields">
-                <div class="col col-5-sm input-group-prepend">
-                    <!--col-xs-12-->
-                    <span class="input-group-text">Plain-Text</span>
-                    <textarea rows="4" cols="50" class="form-control" label="input plain-text here" v-model="plain_text"
-                        placeholder="plain-text here" id="input_plain_text" v-on:input="encrypt_text"></textarea>
-                </div>
-                <div class="col-2 buttons">
-                    <div class="row">
-                        <div id="encrypt">
-                            <button class="btn btn-primary" v-on:click="save_text" id="btn_save">Save</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div id="clear">
-                            <button class="btn btn-primary" v-on:click="clear_text" id="btn_clear">Clear</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="col col-5-sm input-group-prepend">
-                    <span class="input-group-text">Cypher-text</span>
-                    <textarea rows="4" cols="50" class="form-control" label="input cypher-text here"
-                        v-model="cypher_text" v-on:input="decrypt_text" placeholder="cypher-text here"
-                        id="input_cypher_text"></textarea>
-                </div>
-            </div>
-        </div>
-
-        <!-- <div id="todo_items">
-            <div v-for="(todo, index) in todos">
-                <div>{{index+1}}. {{todo.text}} ({{todo.priority}})</div>
-                <div><a class="btn" v-on:click="removeTodo(index)">X</a></div>
-            </div>
-    </div> -->
-        <div id="log">
-            <div class="row log-item" v-for="(item, index) in data">
-                <div class="col-5">
-                    <div class="row">
-                        Plain Text
-                    </div>
-                    <textarea class="row log-text">{{item.pt}}</textarea>
-                </div>
-                <div class="col-5">
-                    <div class="row">
-                        Cypher Text
-                    </div>
-                    <textarea class="row log-text">{{item.ct}}</textarea>
-                </div>
-                <div class="col-2">
-                    <div class="row">Rotation:</div>
-                    <div class="row">{{item.rv}}</div>
-                    <div class="row">
-                        <button class="btn btn-primary" v-on:click="load(index)">Load</button>
-                    </div>
-                    <div class="row">
-                        <button class="btn btn-primary" v-on:click="delete_item(index)">Delete</button>
-                    </div>
-                </div>
-                <!-- {{index != (data.length - 1)}}
-                <hr v-if="index != (data.length - 1)" /> -->
-            </div>
-        </div>
-
+<div class="container" id="instructions">Type text into appropriate form, then click the appropriate button to
+    convert between plain-text and cypher-text based on a long-string rotation of concatinated
+    <b>[A-Z][a-z][0-9][!@#$%^&*()-_=+[{]}|;:'\"\\/,.? ]</b>(angle brackets are included).</div>
+<div id="app">
+    <div class="container form-group" id="div_rotation">
+        <input v-on:input="encrypt_text" v-model="rotation" type="number" id="input_rotation" />
     </div>
-    <script src="./rotN.js"></script>
+    <div class="container form-group">
+        <div class="row" id="input_fields">
+            <div class="col col-5-sm input-group-prepend">
+                <!--col-xs-12-->
+                <span class="input-group-text">Plain-Text</span>
+                <textarea rows="4" cols="50" class="form-control" label="input plain-text here" v-model="plain_text"
+                    placeholder="plain-text here" id="input_plain_text" v-on:input="encrypt_text"></textarea>
+            </div>
+            <div class="col-2 buttons">
+                <div class="row">
+                    <div id="encrypt">
+                        <button class="btn btn-primary" v-on:click="save_text" id="btn_save">Save</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="clear">
+                        <button class="btn btn-primary" v-on:click="clear_text" id="btn_clear">Clear</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-5-sm input-group-prepend">
+                <span class="input-group-text">Cypher-text</span>
+                <textarea rows="4" cols="50" class="form-control" label="input cypher-text here" v-model="cypher_text"
+                    v-on:input="decrypt_text" placeholder="cypher-text here" id="input_cypher_text"></textarea>
+            </div>
+        </div>
+    </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-        crossorigin="anonymous"></script>
-</body>
+    <div id="log">
+        <div class="row log-item" v-for="(item, index) in data">
+            <div class="col-5">
+                <div class="row">
+                    Plain Text
+                </div>
+                <textarea class="row log-text">[[item.pt]]</textarea>
+            </div>
+            <div class="col-5">
+                <div class="row">
+                    Cypher Text
+                </div>
+                <textarea class="row log-text">[[item.ct]]</textarea>
+            </div>
+            <div class="col-2">
+                <div class="row">Rotation:</div>
+                <div class="row">[[item.rv]]</div>
+                <div class="row">
+                    <button class="btn btn-primary" v-on:click="load(index)">Load</button>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary" v-on:click="delete_item(index)">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-</html>
+</div>
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'html_css/rotN.js' %}"></script>
+{% endblock %}
