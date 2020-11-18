@@ -1,0 +1,76 @@
+{% extends 'blog/base.html' %}
+{% block title %}Post Detail{% endblock %}
+{% block style %}
+<style>
+    .profile_picture {
+        max-height: 100px;
+    }
+
+    .post_picture {
+        max-height: 200px;
+    }
+
+    .comment_top_row {
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
+{% endblock %}
+{% block body %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>{{post.user.username}}</th>
+            <th>{{title}}</th>
+            <th>{{date}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><img class="profile_picture" src="{{post.user.profile.profile_picture.url}}"></td>
+            <td>{{body}}</td>
+            <td><img class="post_picture" src="{{image}}"></td>
+        </tr>
+    </tbody>
+</table>
+{% if authenticated %}
+<form action="{% url 'blog_app:comment_post' post.id %}" method="POST">
+    {% csrf_token %}
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Comment</span>
+        </div>
+        <input type="text" class="form-control" name="comment" required>
+    </div>
+    <button class="btn btn-primary" type="submit">Reply To Post</button>
+    <hr>
+</form>
+{% endif %}
+
+{% if comments_exist %}
+<table class="table">
+    {% for comment in comments %}
+    <tbody>
+        <tr>
+            <th class="comment_top_row">
+                <span>{{comment.blog_post.user.username}}</span>
+                <a href="{% url 'blog_app:comment_detail' comment.id %}">...</a>
+            </th>
+        </tr>
+        <tr>
+            <td>{{comment.content}}</td>
+        </tr>
+    </tbody>
+    {% if 'Comment.objects.filter(parent_comment=comment).exists()' %}
+    {% for sub_comment in 'Comment.objects.filter(parent_comment=comment)' %}
+    {% include "blog_app/comment.html" %}
+    {% endfor %}
+    {% endif %}
+    {% endfor %}
+</table>
+
+{% endif %}
+
+{% endblock %}
+{% block javascript %}
+{% endblock %}

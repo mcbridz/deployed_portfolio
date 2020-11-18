@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('html_css.urls')),
     path('urlshortener/', include('urlshortener.urls')),
-    path('pokedex/', include('pokedex.urls'))
+    path('pokedex/', include('pokedex.urls')),
+    path('blog/', include('blog.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
