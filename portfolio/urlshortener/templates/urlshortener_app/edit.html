@@ -1,0 +1,60 @@
+{% extends 'urlshortener_app/base.html' %}
+{%block title%}{{title}}{%endblock%}
+{%block style%}
+<style>
+    #col_submit {
+        display: flex;
+        align-items: center;
+    }
+
+    #col_button {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+{%endblock%}
+{%block body%}
+<div class="container">
+    <div class="row">
+        <div class="col s12" id="col_button">
+            <a href="{% url 'urlshort:urlshortener' %}" class="btn waves-effect waves-light">Return To Main Page</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s7">
+            <h5>Original URL</h5>
+        </div>
+        <div class="col s3">
+            <h5>Shortened URL</h5>
+        </div>
+        <div class="col s1">
+            <h5>Counter</h5>
+        </div>
+        <div class="col s1"></div>
+    </div>
+    {%for url in urls%}
+    <div class="row">
+        <div class="col s7">
+            <input type="text" disabled value="{{url.url}}">
+        </div>
+        <div class="col s3">
+            <input type="text" disabled value="{{url.code}}">
+        </div>
+        <div class="col s1">
+            <input type="number" disabled value={{url.counter}}>
+        </div>
+        <div class="col s1">
+            <a href="{% url 'urlshort:delete' url.id %}" class="btn waves-effect waves-light">Delete</a>
+        </div>
+    </div>
+    {%endfor%}
+
+
+
+</div>
+{%endblock%}
+
+{%block javascript%}
+<script>
+</script>
+{%endblock%}

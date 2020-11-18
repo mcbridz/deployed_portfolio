@@ -20,6 +20,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'pokedex',
+    'urlshortener',
     'html_css',
     'django.contrib.admin',
     'django.contrib.auth',

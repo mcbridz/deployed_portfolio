@@ -1,0 +1,287 @@
+{% extends 'pokedex_app/base.html' %}
+{% block title %}Pokedex Home{% endblock %}
+{% block style %}
+<style>
+    #container_body {
+        display: flex;
+        flex-direction: row;
+        background-color: red;
+        min-width: 80%;
+        min-height: 80%;
+        padding: 3%;
+        border: 2px solid black;
+        border-radius: 5px;
+        margin-top: 3%;
+    }
+
+    #left_side {
+        background-color: lightgray;
+        border: 2px solid black;
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+        min-height: 456px;
+    }
+
+    #right_side {}
+
+    #container_btns {
+        display: flex;
+        justify-content: space-evenly;
+        margin: 6px;
+    }
+
+    #btn_name {
+        color: white;
+        background-color: green;
+    }
+
+    #btn_type {
+        color: white;
+        background-color: green;
+    }
+
+    #btn_reset {
+        color: white;
+        background-color: green;
+    }
+
+    #btn_search {
+        color: white;
+        background-color: black;
+    }
+
+    .arrow_button {
+        width: min-content;
+        height: min-content;
+        color: white;
+        background-color: green;
+        margin: 5px;
+    }
+
+    #arrow_controls {
+        height: 60%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #side_arrows {
+        width: 50%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    #input_and_button {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    #pagination_display {
+        text-align: center;
+    }
+
+    #pictures {
+        text-align: center;
+        margin: 0;
+    }
+
+    .picture {
+        min-height: 40%;
+    }
+
+    #div_dropdown {
+        width: 100%;
+    }
+
+    #btn_dropdown {
+        background-color: white;
+        color: black;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    #div_features {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    #message {
+        text-align: center;
+    }
+</style>
+{% endblock %}
+{% block body %}
+
+<div class="container" id="container_body">
+    {% for pokemon in pokemons %}
+    <div class="container" id="left_side">
+        <div class="container" id="pictures">
+            <a id="div_pictures">
+                <img class="picture" id="front_picture" src="{{pokemon.image_front}}" alt="">
+                <img class="picture hidden" id="back_picture" hidden src="{{pokemon.image_back}}" alt="">
+            </a>
+            <div class="container" id="info">
+                <table class="table">
+                    <tr>
+                        <th>Name</th>
+                        <td>{{ pokemon.name|title }}</td>
+                    </tr>
+                    <tr>
+                        <th>Number</th>
+                        <td>{{ pokemon.number }}</td>
+                    </tr>
+                    <tr>
+                        <th>Height</th>
+                        <td>{{ pokemon.height }} m</td>
+                    </tr>
+                    <tr>
+                        <th>Weight</th>
+                        <td>{{ pokemon.weight }} kg</td>
+                    </tr>
+                    <tr>
+                        <th>Type</th>
+                        <td>
+                            <!-- pokemon.types.all is the right-side of for loop to print -->
+                            {% for type in pokemon.types.all %}
+                            <div>{{ type.name|title }}</div>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="container" id="pagination_display">
+            <a class="btn arrow_button" id="turn_pokemon"><i class="fas fa-sync"></i></a>
+            <h6>{{ page_number }} of {{ paginator.num_pages }}</h6>
+        </div>
+    </div>
+    {% endfor %}
+
+
+    <div class="container" id="right_side">
+        <form method="GET" class="form-group">
+            <div class="container" id="container_btns">
+                <a class="btn disabled" id="btn_name">Search By Name</a>
+                <a class="btn" href="{% url 'pokedex_app:home' %}" id="btn_reset">Reset</a>
+                <a class="btn" id="btn_type">Search By Type</a>
+            </div>
+            <div class="container" id="input_and_button">
+
+                <input type="text" class="form-control" id="search_bar" placeholder="Search By Name"
+                    name="search_string">
+
+
+                <div class="btn-group" id="div_dropdown" hidden>
+                    <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" id="btn_dropdown">
+                        Search By Type
+                    </button>
+                    <div class="dropdown-menu">
+                        {% for type in poketypes %}
+                        <a class="dropdown-item"
+                            href="?search_type=type&search_string={{type.name}}">{{ type.name|title }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+
+                <input type="hidden" id="search_type" name="search_type"
+                    value='{% if search_type == "random" %}name{% elif search_type %}{{search_type}}{% else %}name{% endif %}'>
+            </div>
+        </form>
+
+
+        <!-- paginator section -->
+        <div class="container" id="arrow_controls">
+
+            <!-- paginator back 10 items -->
+            {% if back_ten_possible %}
+            <a href="?page={{back_ten_number}}{% if search_type %}&search_type={{ search_type }}{% endif %}{% if search_string %}&search_string={{search_string}}{% endif %}"
+                class="btn arrow_button"><i class="fas fa-caret-up"></i></a>
+            {% else %}
+            <a href="#!" class="btn arrow_button"><i class="fas fa-caret-up"></i></a>
+            {% endif %}
+
+            <div class="container">
+                <div class="container" id="side_arrows">
+
+                    <!-- paginator back 1 item -->
+                    {% if pokemons.has_previous %}
+                    <a href="?page={{pokemons.previous_page_number}}{% if search_type %}&search_type={{ search_type }}{% endif %}{% if search_string %}&search_string={{search_string}}{% endif %}"
+                        class="btn arrow_button"><i class="fas fa-caret-left"></i></a>
+                    {% else %}
+                    <a href="#!" class="btn arrow_button"><i class="fas fa-caret-left"></i></a>
+                    {% endif %}
+
+                    <!-- paginator forward 1 item -->
+                    {% if pokemons.has_next %}
+                    <a href="?page={{pokemons.next_page_number}}{% if search_type %}&search_type={{ search_type }}{% endif %}{% if search_string %}&search_string={{search_string}}{% endif %}"
+                        class="btn arrow_button"><i class="fas fa-caret-right"></i></a>
+                    {% else %}
+                    <a href="#!" class="btn arrow_button"><i class="fas fa-caret-right"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- paginator back 10 items -->
+            {% if forward_ten_possible %}
+            <a href="?page={{forward_ten_number}}{% if search_type %}&search_type={{ search_type }}{% endif %}{% if search_string %}&search_string={{search_string}}{% endif %}"
+                class="btn arrow_button"><i class="fas fa-caret-down"></i></a>
+            {% else %}
+            <a href="#!" class="btn arrow_button"><i class="fas fa-caret-down"></i></a>
+            {% endif %}
+        </div>
+
+        <!-- fun features -->
+        <div class="container" id="div_features">
+            <a href="?search_type=random" class="btn arrow_button" id="button_random">Surprise Me</a>
+        </div>
+    </div>
+</div>
+{% if message != '' %}<div id="message">{{message}}</div> {% endif %}
+{% endblock %}
+
+{%block javascript%}
+<script>
+    $('#btn_name').click(function () {
+        console.log('setting search parameter to "name"')
+        $('#search_bar').attr('hidden', false)
+        $('#div_dropdown').attr('hidden', true)
+        $('#search_type').val('name')
+        $('#btn_name').addClass('disabled')
+        $('#btn_type').removeClass('disabled')
+        $('#search_bar').attr('placeholder', 'Search By Name')
+    })
+    $('#btn_type').click(function () {
+        console.log('setting search parameter to "type"')
+        $('#div_dropdown').attr('hidden', false)
+        $('#search_bar').attr('hidden', true)
+        $('#search_type').val('type')
+        $('#btn_type').addClass('disabled')
+        $('#btn_name').removeClass('disabled')
+        $('#search_bar').attr('placeholder', 'Search By Type')
+    })
+    $('#turn_pokemon').click(function () {
+        console.log('turning pokemon')
+        if ($('#front_picture').hasClass('hidden')) {
+            $('#front_picture').removeClass('hidden')
+            $('#front_picture').attr('hidden', false)
+            $('#back_picture').addClass('hidden')
+            $('#back_picture').attr('hidden', true)
+        } else {
+            $('#back_picture').removeClass('hidden')
+            $('#back_picture').attr('hidden', false)
+            $('#front_picture').addClass('hidden')
+            $('#front_picture').attr('hidden', true)
+        }
+
+    })
+</script>
+{%endblock%}
