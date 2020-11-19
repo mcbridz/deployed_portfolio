@@ -1,0 +1,479 @@
+{%extends 'mirmir_app/employee_base.html'%}
+{%block title%}Mirmir: Employee{%endblock%}
+{%block style%}
+<style>
+    a>i:hover {
+        cursor: pointer;
+    }
+
+    #orders_button_div>a {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    img {
+        max-height: 100px;
+    }
+
+    .image_group {
+        border: 1px solid lightgrey;
+        border-radius: 3px;
+        padding: 5px;
+    }
+
+    #container_add {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .container_title {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    #mobile_table {
+        display: none;
+    }
+
+    #email_sent_toast {
+        position: absolute;
+        bottom: 50%;
+        left: 50%;
+    }
+
+    @media only screen and (max-width: 550px) {
+        #desktop_table {
+            display: none;
+        }
+
+        #mobile_table {
+            display: table;
+        }
+
+    }
+</style>
+{%endblock%}
+{%block body%}
+<div class="container" id="app">
+
+    <!-- Tab Management -->
+    <ul class="nav nav-pills nav-fill justify-content-center">
+        <li class="nav-item">
+            <a id="open_orders" :class="{ active: selected == 'open_orders' }" @click="selected='open_orders'"
+                class="nav-link" href="#">Open Orders</a>
+        </li>
+        <li class="nav-item">
+            <a id="active_products" :class="{ active: selected =='active_products' }"
+                @click="selected='active_products'" class="nav-link" href="#">Active Products</a>
+        </li>
+        <li class="nav-item">
+            <a id="send_emails" :class="{ active: selected =='send_emails' }" @click="selected='send_emails'"
+                class="nav-link" href="#">Send Emails</a>
+        </li>
+    </ul>
+
+    <!-- Inherit Order Tab Here -->
+    {% include 'mirmir_app/orders_tab.html' %}
+
+
+    <!-- Active Products Tab -->
+    {% include 'mirmir_app/products_tab.html' %}
+
+
+    <!-- Send Emails Tab -->
+    <div class="container" v-show="selected == 'send_emails'">
+        <label for="email_select_by_status">Status:</label>
+        <select v-model="email.email_select_by_status" id="email.email_select_by_status" class="form-control">
+            <option value="1">Subscriber</option>
+            <option value="3">Club Member</option>
+            <option value="2">Purchaser</option>
+        </select>
+        <textarea class="form-control" name="email_text" id="email_text" rows="10"
+            v-model="email.email_text"></textarea>
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="send_product_teaser"
+                v-model="email.send_product_teaser">
+            <label for="send_product_teaser" class="form-check-label">Send Product Teasers?</label>
+        </div>
+        <h5>Work more on product teasers later</h5>
+        <div class="toast" id="email_sent_toast">
+            <div class="toast-body">
+                Email Sent
+            </div>
+        </div>
+        <a @click="sendMail" class="btn btn-primary">Send Email</a>
+    </div>
+
+
+</div>
+
+{%endblock%}
+
+{%block javascript%}
+<script>
+    // $(function () {
+    //     $('.datepicker').datepicker({
+    //         format: 'yyyy-MM-dd',
+    //     })
+    // })
+    let app = new Vue({
+        el: '#app',
+        delimiters: ['[[', ']]'],
+        data: {
+            open_orders: [],
+            order_modal_data: {
+                contact: '',
+                order_type: '',
+                order_number: '',
+                order_date: '',
+                billing_birthdate: '',
+                billing_first_name: '',
+                billing_last_name: '',
+                billing_company: '',
+                billing_address: '',
+                billing_address2: '',
+                billing_city: '',
+                billing_state_code: '',
+                billing_zip_code: '',
+                billing_email: '',
+                shipping_birthdate: '',
+                shipping_first_name: '',
+                shipping_last_name: '',
+                shipping_company: '',
+                shipping_address: '',
+                shipping_address2: '',
+                shipping_city: '',
+                shipping_state_code: '',
+                shipping_zip_code: '',
+                gift_message: '',
+                sub_total: '',
+                order_notes: '',
+                handling: '',
+                shipping: '',
+                tax: '',
+                total: '',
+                previous_order_number: '',
+                transaction_type: '',
+                is_pickup: '',
+                is_paid: '',
+                shipping_service: '',
+                shipping_tracking_number: '',
+                payment_status: '',
+                shipping_status: '',
+                items: [],
+                order: 0,
+            },
+            active_products_in_tab: [],
+            product_modal_data: {
+                id: '',
+                product_type: '',
+                title: '',
+                POSTitle: '',
+                brand: '',
+                subtitle: '',
+                action_message: '',
+                is_active: '',
+                is_display_on_website: '',
+                description: '',
+                description_teaser: '',
+                date_added: '',
+                date_modified: '',
+                SKU_SKU: '',
+                SKU_cost_of_good: '',
+                SKU_UPC_code: '',
+                SKU_unit_description: '',
+                SKU_min_order_qty: '',
+                SKU_max_order_qty: '',
+                SKU_order_in_multiples_of: '',
+                SKU_weight: '',
+                SKU_is_non_taxable: '',
+                SKU_is_no_shipping_charge: '',
+                SKU_Prices_price_level: '',
+                SKU_Prices_price: '',
+                SKU_Prices_price_quantity: '',
+                SKU_Prices_is_inventory_on: '',
+                SKU_Prices_Inventory_current_inventory: '',
+                SKU_Prices_Inventory_inventory_pool: '',
+                WineProperties_bottles_in_case: '',
+                WineProperties_bottle_size_in_ml: '',
+                WineProperties_type: '',
+                WineProperties_alcohol: '',
+                WineProperties_bottling_date: '',
+                WineProperties_tasting_notes: '',
+                WineProperties_wine_maker_notes: '',
+                WineProperties_food_pairing_notes: '',
+                product_photos: [],
+                product_selected: '',
+            },
+            email: {
+                email_select_by_status: 1,
+                email_text: '',
+                customer_email_address: '',
+            },
+            selected: 'open_orders',
+            type_of_update: '',
+            new_photos: false,
+            photo_remove_instructions: []
+        },
+        methods: {
+            //////////////////////////////////////////////////////
+            //                  Email Methods                   //
+            //////////////////////////////////////////////////////
+
+            sendMail: function () {
+                axios({
+                    url: '{% url "mirmir_app:send_email" %}',
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    data: {
+                        email_select_by_status: this.email.email_select_by_status,
+                        email_text: this.email.email_text,
+                    }
+                }).then(response => {
+                    console.log(response.data)
+                    $('#email_sent_toast').toast({ delay: 2000 })
+                    $('#email_sent_toast').toast('show')
+                    this.email.email_text = ''
+                })
+            },
+
+            //////////////////////////////////////////////////////
+            //                Product Methods                   //
+            //////////////////////////////////////////////////////
+            getActiveProducts: function () {
+                axios({
+                    url: '{% url "mirmir_app:get_active_products" %}',
+                    method: 'GET',
+                }).then(response => {
+                    console.log(response.data)
+                    this.active_products_in_tab = response.data.data
+                })
+            },
+            loadProductModal: function (i) {
+                this.product_modal_data = this.active_products_in_tab[i]
+                this.product_selected = i
+                this.type_of_update = 'update'
+            },
+            generateCode: function () {
+                this.product_modal_data.SKU_UPC_code = Math.floor(Math.random() * 9999999999) + (10000000000 + Math.floor(Math.random() * 10))
+            },
+            addNewPhoto: function () {
+                this.new_photos = true
+            },
+            noNewPhoto: function () {
+                this.new_photos = false
+            },
+            changedPhoto: function (i) {
+                this.product_modal_data.product_photos[i].changed = true
+            },
+            removePhoto: function (i) {
+                this.photo_remove_instructions.push(this.product_modal_data.product_photos[i].id)
+                this.product_modal_data.product_photos.splice(i, 1)
+            },
+            savePhoto: function (id) {
+                let image_data = new FormData()
+                let image_file = document.querySelector('#photo_data')
+                image_data.append("image", image_file.files[0])
+                image_data.append("product_id", id)
+                axios({
+                    url: '{% url "mirmir_app:save_photo" %}',
+                    method: 'POST',
+                    data: image_data,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    }
+                }).then(response => {
+                    console.log(response.data)
+                    this.new_photos = false
+                    this.getActiveProducts()
+                    this.loadModal(this.product_selected)
+
+                })
+            },
+            saveProductChanges: function () {
+                axios({
+                    url: '{% url "mirmir_app:save_product_changes" %}',
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    data: {
+                        product: this.product_modal_data,
+                        type: this.type_of_update,
+                        photo_remove_instructions: this.photo_remove_instructions,
+                    }
+                }).then(response => {
+                    console.log(response.data)
+                    if (this.new_photos) {
+                        this.savePhoto(response.data)
+                    } else {
+                        this.getActiveProducts()
+                        this.loadModal(this.product_selected)
+                        this.$forceUpdate()
+                    }
+                })
+            },
+            newImageNumber: function (i) {
+                this.product_modal_data.product_photos.new_number = true
+            },
+            newProduct: function () {
+                this.type_of_update = 'new'
+                this.product_modal_data = {
+                    id: '',
+                    product_type: 'Product',
+                    title: 'ActiveMead5', //
+                    POSTitle: 'mead-5', //
+                    brand: 'Mirmir\'s Well Meadery',
+                    subtitle: 'Mirmir',
+                    action_message: '',
+                    is_active: true,
+                    is_display_on_website: true,
+                    description: 'Pursing your lips and inhaling some air while the wine is still on your palate is also a nice way to spread the more complex flavors through your sinuses. The word "sauvignon" is believed to be derived from the French sauvage meaning "wild." The classic profile of Cabernet Sauvignon tends to be full-bodied with high tannins and noticeable acidity that contributes to the wine\'s aging potential. Some whites age better in stainless steel. Chenin blanc boasts a bouquet of fresh pears, saffron, jasmine, ginger, and quince. If a husband found his wife drinking wine in the early Roman times, he was at liberty to kill her.',
+                    description_teaser: 'Pursing your lips and inhaling some air while the wine is still on your palate is also a nice way to spread the more complex flavors through your sinuses.',
+                    SKU_SKU: '020-10-29-ACT',
+                    SKU_cost_of_good: 29.25,
+                    SKU_UPC_code: '',
+                    SKU_unit_description: 'mead5',
+                    SKU_min_order_qty: 1,
+                    SKU_max_order_qty: 1,
+                    SKU_order_in_multiples_of: 1,
+                    SKU_weight: 5,
+                    SKU_is_non_taxable: false,
+                    SKU_is_no_shipping_charge: false,
+                    SKU_Prices_price_level: 'Normal',
+                    SKU_Prices_price: 29.25,
+                    SKU_Prices_price_quantity: 1,
+                    SKU_Prices_is_inventory_on: true,
+                    SKU_Prices_Inventory_current_inventory: 15,
+                    SKU_Prices_Inventory_inventory_pool: 15,
+                    WineProperties_bottles_in_case: 0,
+                    WineProperties_bottle_size_in_ml: 300,
+                    WineProperties_type: '',
+                    WineProperties_alcohol: '13.5% ABV',
+                    WineProperties_bottling_date: '',
+                    WineProperties_tasting_notes: 'In California, the main stylistic difference in Cabernet Sauvignon is between hillside / mountain vineyards and those on flatter terrain like valley floors. When at a wine tasting event, one is not frowned upon for spitting wine out. Grand Cru wines are produced from the small number of the best vineyard sites in the Côte d\'Or.',
+                    WineProperties_wine_maker_notes: 'Sparkling reds include Lambrusco, from Italy, and Brachetto D\'Acqui. Fruity flavors, with aromas of rose petals, peaches, and allspice. Though you\'ll commonly hear grapes referred to as "fruit," botanists technically classify grapes as berries since each fruit forms from a single flower. Overripe grapes can make the wine taste burnt.',
+                    WineProperties_food_pairing_notes: 'Swine and wine pair well. Uncork that thing, decanter the contents. All grape juice is white, only the skins of purple grapes contain the dark pigment. Toasting was originally the practice of dropping toasted bread into wine to temper excessive acidity. Acidity is a key element in a wine\'s longevity.',
+                    product_photos: [],
+                }
+            },
+            //////////////////////////////////////////////////////
+            //                Order Methods                     //
+            //////////////////////////////////////////////////////
+            sendOrderEmail: function () {
+                axios({
+                    url: '{% url "mirmir_app:send_customer_email" %}',
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    data: {
+                        email_address: this.email.customer_email_address,
+                        email_text: this.email.email_text,
+                    }
+                }).then(response => {
+                    console.log(response.data)
+                    $('#email_sent_toast').toast({ delay: 2000 })
+                    $('#email_sent_toast').toast('show')
+                    this.email.email_text = ''
+                })
+            },
+            getNextOrderNumberEmployee: function () {
+                axios({
+                    url: '{% url "mirmir_app:get_next_order_number_employee" %}',
+                    method: 'GET',
+                }).then(response => {
+                    console.log(response.data)
+                    this.order_modal_data.order_number = response.data
+                })
+            },
+            newOrder: function () {
+                this.order_modal_data = {
+                    contact: '',
+                    order_type: 1,
+                    order_number: 0,
+                    order_date: '',
+                    billing_birthdate: '',
+                    billing_first_name: '',
+                    billing_last_name: '',
+                    billing_company: '',
+                    billing_address: '',
+                    billing_address2: '',
+                    billing_city: '',
+                    billing_state_code: '',
+                    billing_zip_code: '',
+                    billing_email: '',
+                    shipping_birthdate: '',
+                    shipping_first_name: '',
+                    shipping_last_name: '',
+                    shipping_company: '',
+                    shipping_address: '',
+                    shipping_address2: '',
+                    shipping_city: '',
+                    shipping_state_code: '',
+                    shipping_zip_code: '',
+                    gift_message: '',
+                    sub_total: 0,
+                    order_notes: '',
+                    handling: 0,
+                    shipping: 0,
+                    tax: 0,
+                    total: 0,
+                    previous_order_number: '',
+                    transaction_type: 1,
+                    is_pickup: true,
+                    is_paid: false,
+                    shipping_service: '',
+                    shipping_tracking_number: '',
+                    payment_status: 1,
+                    shipping_status: 6,
+                    items: [],
+                }
+                this.getNextOrderNumberEmployee()
+                this.type_of_update = 'new'
+            },
+
+            loadModal: function (i) {
+                this.order_modal_data = this.open_orders[i]
+                this.order_modal_data.order = i
+                this.type_of_update = 'update'
+            },
+            getOpenOrders: function () {
+                axios({
+                    url: "{% url 'mirmir_app:get_open_orders' %}",
+                    method: 'GET',
+                }).then(response => {
+                    console.log(response.data)
+                    this.open_orders = response.data.data
+                })
+            },
+            saveOrderChanges: function () {
+                axios({
+                    url: '{% url "mirmir_app:save_order_changes" %}',
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                    data: {
+                        'order': this.order_modal_data,
+                        'type': this.type_of_update,
+                    }
+                }).then(response => {
+                    console.log(response.data)
+                    this.getOpenOrders()
+                })
+            },
+            updateTotal: function () {
+                this.order_modal_data.total = this.order_modal_data.sub_total * (1 + (this.order_modal_data.tax / 100)) + this.order_modal_data.shipping + this.order_modal_data.handling
+            }
+        },
+        created: function () {
+            this.getOpenOrders()
+            this.getActiveProducts()
+            this.$forceUpdate()
+        }
+    })
+</script>
+{%endblock%}

@@ -13,7 +13,8 @@
                 <a class="nav-link" href="https://github.com/mcbridz" target="_blank">GitHub</a>
             </li>
             <li class="nav-item">
-                <a href="https://github.com/mcbridz/deployed_portfolio/tree/main/python_code" class="nav-link">Python
+                <a href="https://github.com/mcbridz/deployed_portfolio/tree/main/python_code" class="nav-link"
+                    target="_blank">Python
                     Code</a>
             </li>
             <li class="nav-item">
@@ -54,11 +55,22 @@
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Django Demos</a>
                 <div class="dropdown-menu" aria-labelledby="djangoDropDownLink">
                     <a href="{% url 'urlshort:urlshortener' %}" class="dropdown-item" target="_blank">URL
-                        Shortener</a>
-                    <a href="{% url 'pokedex_app:home' %}" class="dropdown-item" target="_blank">Pokedex</a>
-                    <a href="{% url 'blog_app:index' %}" class="dropdown-item" target="_blank">Blog</a>
+                        Shortener (Link redirection)</a>
+                    <a href="{% url 'pokedex_app:home' %}" class="dropdown-item" target="_blank">Pokedex (raw CSS Custom
+                        Mngmt Commands)</a>
+                    <a href="{% url 'blog_app:index' %}" class="dropdown-item" target="_blank">Blog (login
+                        commenting)</a>
+                    <a href="{% url 'library:index' %}" class="dropdown-item" target="_blank">Library (Vue.JS Pagination
+                        Favoriting)</a>
                 </div>
-
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link dropdown-toggle" id="deployedProjects" role="buttone" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">Full Site Mock-Ups</a>
+                <div class="dropdown-menu" aria-labelledby="deployedProjects">
+                    <a href="{% url 'mirmir_app:index' %}" class="dropdown-item">Mirmir Meadery (simulated
+                        small-business goods sales site -no credit-card transactions-)</a>
+                </div>
             </li>
         </ul>
     </div>

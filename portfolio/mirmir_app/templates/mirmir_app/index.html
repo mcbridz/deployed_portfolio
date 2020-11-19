@@ -1,0 +1,87 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="icon" href="{% static 'mirmir_app/small_logo.png' %}">
+
+    <title>Mirmir's Well Meadery</title>
+    <style>
+        body {
+            background-image: url("{% static 'mirmir_app/background.jpg' %}");
+        }
+
+        #body_main {
+            margin-top: 4rem;
+
+        }
+
+        #body_main>.row {
+            justify-content: center;
+        }
+
+        .row>a {
+            margin: 5px;
+        }
+
+        img {
+            max-height: 700px;
+        }
+
+        .row>span {
+            background-color: rgba(255, 255, 240, 0.5);
+            border-radius: 7px;
+            margin-bottom: 15px;
+        }
+
+        @media only screen and (max-width: 1000px) {
+            img {
+                max-height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="body_main">
+        <div class="row"><span>Do not continue unless you are 21 years of age or older.</span></div>
+        <div class="row"><img src="{% static 'mirmir_app/large_logo.png' %}" alt=""></div>
+        <div class="row">
+            <a href="{%url 'mirmir_app:main'%}" class="btn btn-success">Yes, I am 21 or older.</a>
+            <a onclick="goBack()" class="btn btn-danger">No, how did I get here! Let me out!</a>
+        </div>
+        <div class="row">
+            Instructions: In order to create 'orders', you will need to register with a legitimate email address for
+            account verification. With a customer account you can freely traverse different account features like 'club'
+            membership and newsletter subscriptions. You can login to a restricted employee account (username=employee,
+            password=password) and be able to send emails via the employee panel. You can view the source code for this
+            site <a href="">here</a>.
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+    <script>
+        function goBack() {
+            window.history.back()
+        }
+    </script>
+</body>
+
+</html>

@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
     profile_picture = models.ImageField(upload_to='profile/images/', null=True)
     login_name = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name='profile')
+        User, on_delete=models.CASCADE, related_name='profile_ref')
 
     def __str__(self):
         return self.login_name.last_name + ', ' + self.login_name.first_name

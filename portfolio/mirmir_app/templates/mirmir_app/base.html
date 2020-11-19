@@ -1,0 +1,523 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!-- Axios -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
+        integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="
+        crossorigin="anonymous"></script>
+
+    <!-- font-awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+        integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+
+    <!-- font awesome -->
+    <script src="https://kit.fontawesome.com/fce573833e.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="{% static 'mirmir_app/small_logo.png' %}">
+
+    <title>{%block title%}{%endblock%}</title>
+    <style>
+        @font-face {
+            font-family: 'Metamorphous-Regular';
+            src: url("{% static 'mirmir_app/Metamorphous-Regular.otf' %}") format('truetype');
+        }
+
+        #body {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+            url("{% static 'mirmir_app/background.jpg' %}");
+            background-color: rgba(202, 197, 132, 0.4);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Metamorphous-Regular';
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        .social_media {
+            width: 30px;
+        }
+
+        #nav_bottom {
+            display: flex;
+            justify-content: center;
+            /* bottom: 0; */
+            width: 100%;
+            background-color: rgba(255, 255, 240, 0.5);
+            border-radius: 7px;
+        }
+
+        #nav_bottom>span {
+            margin: 5px;
+        }
+
+        #nav_container {
+            flex-direction: column;
+            background-image: url("{% static 'mirmir_app/banner.jpg' %}");
+            background-color: rgba(0, 0, 0, 0);
+            background-size: cover;
+            background-repeat: no-repeat;
+            padding: 2rem 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        #container_bottom_nav {
+            margin-top: 15px;
+        }
+
+        #customer {
+            position: absolute;
+            right: 1%;
+            top: 1%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding-left: 40px;
+        }
+
+        .c-nav {
+            color: black;
+        }
+
+        #mobile_nav {
+            height: 100%;
+            /* 100% Full-height */
+            width: 0;
+            /* 0 width - change this with JavaScript */
+            position: fixed;
+            /* Stay in place */
+            z-index: 3;
+            /* Stay on top */
+            top: 0;
+            /* Stay at the top */
+            left: 0;
+            background-color: #111;
+            /* Black*/
+            overflow-x: hidden;
+            /* Disable horizontal scroll */
+            padding-top: 60px;
+            /* Place content 60px from the top */
+            transition: 0.5s;
+            /* 0.5 second transition effect to slide in the sidenav */
+        }
+
+        .add-or-remove-group {
+            display: flex;
+            flex-direction: row;
+        }
+
+        /* The navigation menu links */
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        /* When you mouse over the navigation links, change their color */
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        /* Position and style the close button (top right corner) */
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        #btn_checkout {
+            padding: 0 5px;
+            color: #eae0c8;
+        }
+
+        #btn_checkout:hover {
+            color: black;
+        }
+
+
+
+        #shopping_cart {
+            height: 100%;
+            /* 100% Full-height */
+            width: 0;
+            /* 0 width - change this with JavaScript */
+            position: fixed;
+            /* Stay in place */
+            z-index: 3;
+            /* Stay on top */
+            top: 0;
+            /* Stay at the top */
+            right: 0;
+            background-color: #111;
+            /* Black*/
+            overflow-x: hidden;
+            /* Disable horizontal scroll */
+            padding-top: 60px;
+            /* Place content 60px from the top */
+            transition: 0.5s;
+            /* 0.5 second transition effect to slide in the sidenav */
+        }
+
+        #cart_app {
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .cart-text {
+            color: #f1f1f1;
+        }
+
+        #checkout-group {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #total {
+            text-align: center;
+        }
+
+        .cart-group {
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            align-items: center;
+        }
+
+        .cart-items {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .add-or-remove-group>input {
+            width: 40px;
+        }
+
+        .add-or-remove-group>a {
+            padding: 0 5px;
+        }
+
+        #cart_close {
+            margin-bottom: 20px;
+        }
+
+        #desk_nav {
+            display: flex;
+            flex-direction: row;
+            background-color: rgba(255, 255, 240, 0.5);
+            border-radius: 3px;
+            margin-top: 0.5rem;
+            font-size: large;
+        }
+
+        /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+        #main {
+            transition: margin-left .5s;
+            padding: 20px;
+        }
+
+        /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+
+        #mobile_hamburger {
+            position: absolute;
+            left: 5%;
+            top: 8%;
+            border: 3px solid gray;
+            border-radius: 5px;
+            width: 40px;
+            display: flex;
+            justify-content: center;
+            text-align: center;
+            display: none;
+        }
+
+        #mobile_hamburger i {
+            font-size: xx-large;
+            text-align: center;
+        }
+
+        #mobile_cart_icon {
+            display: none;
+        }
+
+        #acct_cart {
+            position: absolute;
+            width: 380px;
+            right: 2%;
+            display: inline;
+            height: 70px;
+            padding: 0;
+            top: 0%;
+            z-index: 0;
+            background-color: rgba(255, 255, 240, 0.5);
+            border-radius: 3px;
+        }
+
+        #cart_app {
+            height: 0;
+        }
+
+        #logo {
+            max-height: 175px;
+        }
+
+        @media only screen and (max-width: 1000px) {
+
+            #desk_nav,
+            #acct_cart {
+                display: none;
+            }
+
+            #mobile_hamburger {
+                display: flex;
+            }
+
+            #mobile_cart_icon {
+                display: inline;
+                position: absolute;
+                right: 2%;
+                z-index: 2;
+            }
+        }
+    </style>
+    {% block style %}
+    {%endblock%}
+</head>
+
+<body class="d-flex flex-column min-vh-100" id="body">
+    <a class="nav-link c-nav" id="mobile_cart_icon" onclick="openCart()"><i class="fas fa-shopping-cart fa-3x"></i></a>
+    <nav id="nav_container" class="navbar navbar-light">
+        <a href="{% url 'mirmir_app:main' %}"><img id="logo" src="{% static 'mirmir_app/small_logo.png' %}"></a>
+        <!-- desktop nav -->
+        <div class="navbar navbar-light" id="desk_nav">
+            <a class="nav-link" href="{% url 'mirmir_app:shop' %}">Shop</a>
+            <a class="nav-link" href="{% url 'mirmir_app:about' %}">About Mirmir's Well Meadery</a>
+            <a class="nav-link" href="{% url 'mirmir_app:club' %}">Mead Club</a>
+        </div>
+
+
+
+        <!-- mobile nav -->
+        <span id="mobile_hamburger" onclick="openNav()"><i class="fas fa-bars"></i></span>
+        <div class="sidenav" id="mobile_nav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            {% if user.is_authenticated %}
+            <a class="nav-link" href="{% url 'mirmir_app:logout' %}" tabindex="-1" aria-disabled="true">Log
+                Out</a>
+            {% else %}
+            <a id="mobile_username" class="nav-link" tabindex="-1" aria-disabled="true" disabled>Welcome,
+                Guest!</a>
+            {% endif %}
+            <a href="" class="nav-link c-nav">Your Account</a>
+            <a class="nav-link" href="{% url 'mirmir_app:club' %}">Mead Club</a>
+            <a class="nav-link" href="{% url 'mirmir_app:shop' %}">Shop</a>
+            <a class="nav-link" href="{% url 'mirmir_app:about' %}">About Mirmir's Well Meadery</a>
+            {% if not user.is_authenticated %}
+            <a class="nav-link" href="{% url 'mirmir_app:login' %}">Login</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- shopping cart -->
+    <div id="cart_app">
+        <div id="shopping_cart" class="sidenav">
+            <div id="cart_close">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeCart()">&times;</a>
+            </div>
+            <div>
+                <div class="container" v-show="cart.length == 0"><span class="cart-text">No Items In Cart</span>
+                </div>
+
+                <div class="cart-group" v-show="cart.length">
+                    <div class="container cart-items" v-for="(item, index) in cart">
+                        <span class="cart-text">[% item.title %] ($[%item.cost%])</span>
+                        <div class="add-or-remove-group">
+                            <input type="number" min="1" v-model="item.num" :max="item.inventory"
+                                @input="calculateTotal()">
+                            <a class="btn btn-danger" @click=removeItemFromCart(index)><i class="fas fa-times"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container" id="checkout-group">
+                    <span id="total" class="cart-text">Total: $[%total%]</span>
+                    <a href="{% url 'mirmir_app:checkout' %}" class="btn btn-primary" id="btn_checkout">Checkout</a>
+                </div>
+            </div>
+
+        </div>
+        <div class="navbar navbar-light" id="acct_cart">
+            <span class="nav-item" id="customer">
+                <span v-show="num_items != 0">[%num_items%]</span>
+                <a class="nav-link c-nav" onclick="openCart()"><i class="fas fa-shopping-cart fa-3x"></i></a>
+                {% if user.is_authenticated %}
+                <a disabled class="nav-link c-nav">Welcome, {{user.username}}</a>
+                <a href="{% url 'mirmir_app:profile' %}" class="nav-link c-nav">Your Account</a>
+                {% endif %}
+                {% if user.is_authenticated %}
+                <a class="btn nav-link" href="{% url 'mirmir_app:logout' %}" tabindex="-1" aria-disabled="true">Log
+                    Out</a>
+                {% else %}
+                <a id="desktop_username" class="nav-link" data-toggle="tooltip" title="Log In Here!"
+                    href="{% url 'mirmir_app:login' %}" tabindex="-1" aria-disabled="true">Welcome,
+                    Guest!</a>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+    {%block body%}
+    {%endblock%}
+    <div class="container" id="container_bottom_nav">
+        <nav id="nav_bottom" class="navbar mt-auto">
+            <span class="nav-item">
+                <a href="#!"><img class="social_media" src="{% static 'mirmir_app/facebook.png' %}" alt=""></a>
+            </span>
+            <span class="nav-item">
+                <a href="#!"><img class="social_media" src="{% static 'mirmir_app/gmail.png' %}" alt=""></a>
+            </span>
+            <span class="nav-item">
+                <a href="#!"><img class="social_media" src="{% static 'mirmir_app/instagram.png' %}" alt=""></a>
+            </span>
+            <span class="nav-item">
+                <a href="#!"><img class="social_media" src="{% static 'mirmir_app/twitter.png' %}" alt=""></a>
+            </span>
+        </nav>
+    </div>
+
+
+    <script>
+
+        var session_cart = new Vue({
+            el: "#cart_app",
+            delimiters: ['[%', '%]'],
+            data: {
+                message: 'Hello, world!',
+                cart: [],
+                product_ids_in_cart: [],
+                total: 0,
+                num_items: 0,
+            },
+            methods: {
+                calculateTotal: function () {
+                    console.log('calculating total')
+                    console.log(this.cart)
+                    let total = 0
+                    let num_items = 0
+                    for (i = 0; i < this.cart.length; ++i) {
+                        total += (parseInt(this.cart[i].num) * parseInt(this.cart[i].cost))
+                        num_items += parseInt(this.cart[i].num)
+                    }
+                    this.num_items = num_items
+                    this.total = total
+                    sessionStorage.setItem('cart', JSON.stringify(this.cart))
+                },
+                removeItemFromCart: function (i) {
+                    // console.log('removing item from cart with index of ' + i)
+                    let num_removed = this.cart[i].num
+                    this.num_items -= num_removed
+                    this.cart.splice(i, 1)
+                    this.calculateTotal()
+                    // console.log('exiting removeItemFromCart on session_cart vue')
+                },
+                addToCart: function (item) {
+                    console.log('started addToCart from session_cart vue')
+                    for (i = 0; i < this.cart.length; ++i) {
+                        if (this.cart[i].id == item.id) {
+                            console.log('item found in cart, adding 1 to num')
+                            this.cart[i].num += 1
+                            this.calculateTotal()
+                            // console.log(this.cart)
+                            return
+                        }
+                    }
+                    console.log('item not found in cart, making num key with value of 1 and pushing to cart')
+                    item.num = 1
+                    this.cart.push(item)
+                    this.calculateTotal()
+                    // console.log(this.cart)
+                },
+            },
+            created: function () {
+                let cart_data = JSON.parse(sessionStorage.getItem('cart'))
+                if (cart_data === null) {
+                    console.log('null')
+                    sessionStorage.setItem('cart', JSON.stringify([]))
+                    this.cart = []
+                } else {
+                    console.log('not null')
+                    this.cart = cart_data
+                }
+                this.calculateTotal()
+            }
+        })
+        /* Set the width of the side navigation to 250px */
+        function openNav() {
+            document.getElementById("mobile_nav").style.width = "250px"
+        }
+
+        /* Set the width of the side navigation to 0 */
+        function closeNav() {
+            document.getElementById("mobile_nav").style.width = "0"
+        }
+
+        function openCart() {
+            document.getElementById("shopping_cart").style.width = "350px"
+        }
+
+        function closeCart() {
+            document.getElementById("shopping_cart").style.width = "0"
+        }
+
+        // tooltip jQuery
+        // $('#desktop_username').ready(function () {
+        $('#desktop_username').tooltip()
+        // })
+    </script>
+    {%block javascript%}
+    {%endblock%}
+</body>
+
+</html>

@@ -1,0 +1,500 @@
+{%extends 'mirmir_app/employee_base.html'%}
+{%block title%}Mirmir: Employee{%endblock%}
+{%block style%}
+<style>
+    img {
+        max-height: 100px;
+    }
+
+    .slide-group,
+    .highlight-group,
+    .warning-group {
+        border: 2px solid grey;
+        border-radius: 3px;
+        padding: 30px;
+        margin-top: 5px;
+        background-color: #78b9ff;
+    }
+
+    #page-label {
+        text-align: center;
+    }
+
+    #div_add_slide,
+    #div_add_highlight {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .toast.show {
+        display: block;
+        position: fixed;
+        top: 25%;
+        left: 12%;
+    }
+
+    .toast {
+        display: none;
+    }
+</style>
+{%endblock%}
+{%block body%}
+<div class="container" id="app">
+    <div id="page-label">
+        <h1>Main Page Management</h1>
+    </div>
+    <div class="toast" id="update_carousel_toast">
+        <div class="toast-body">
+            Carousel Slide Updated
+        </div>
+    </div>
+    <div class="toast" id="delete_carousel_toast">
+        <div class="toast-body">
+            Carousel Slide Deleted
+        </div>
+    </div>
+    <div class="toast" id="new_carousel_toast">
+        <div class="toast-body">
+            New Carousel Slide Added
+        </div>
+    </div>
+
+    <div class="toast" id="update_page_highlight_toast">
+        <div class="toast-body">
+            Highlight Updated
+        </div>
+    </div>
+    <div class="toast" id="delete_page_highlight_toast">
+        <div class="toast-body">
+            Highlight Deleted
+        </div>
+    </div>
+    <div class="toast" id="new_page_highlight_toast">
+        <div class="toast-body">
+            New Highlight Added
+        </div>
+    </div>
+
+    <div class="toast" id="warning_toast">
+        <div class="toast-body">
+            Warning Updated
+        </div>
+    </div>
+
+    <!-- Tab Selection -->
+    <ul class="nav nav-pills nav-fill justify-content-center">
+        <li class="nav-item">
+            <a id="a_carousele" :class="{ active: selected == 'a_carousele' }" @click="selected='a_carousele'"
+                class="nav-link" href="#">Carousel
+                Modification</a>
+        </li>
+        <li class="nav-item">
+            <a id="a_highlight" :class="{ active: selected =='a_highlight' }" @click="selected='a_highlight'"
+                class="nav-link" href="#">Page Highlight
+                Modification</a>
+        </li>
+        <li class="nav-item">
+            <a id="a_warning" :class="{ active: selected =='a_warning' }" @click="selected='a_warning'" class="nav-link"
+                href="#">Warning Display</a>
+        </li>
+    </ul>
+
+
+
+
+    <!-- Carousel Tab -->
+    <div class="form-group slide-group" id="carousele_data" v-show="selected == 'a_carousele'"
+        v-for="(slide, index) in carousele_data">
+        <form class="container" enctype="multipart/form-data">
+            <label :for="'slide_caption_title_' + slide.id">Caption Title</label>
+            <input type="text" maxlength="100" class="form-control" :name="'slide_caption_title_' + slide.id"
+                :id="'slide_caption_title_' + slide.id" v-model="slide.caption_title">
+            <label :for="'slide_caption_' + slide.id">Caption</label>
+            <input type="text" maxlength="100" class="form-control" :name="'slide_caption_' + slide.id"
+                :id="'slide_caption_' + slide.id" v-model="slide.caption">
+            <div>Currently Displayed Image: </div>
+            <img :src="slide.image">
+            <label :for="'slide_image_' + slide.id">Choose New Image</label>
+            <input type="file" :id="'slide_image_' + slide.id" :name="'slide_image_' + slide.id" accept="image/*">
+            <div>[[slide.image]]</div>
+            <label :for="'slide_display_order_' + slide.display_order">Display Order Number</label>
+            <input type="number" class="form-control" :name="'slide_display_order_' + slide.id"
+                :id="'slide_display_order_' + slide.display_order" v-model="slide.display_order">
+            <a class="btn btn-success" @click="saveSlide(index, slide.id)">Update</a>
+            <a class="btn btn-danger" @click="deleteSlide(slide.id)">Delete</a>
+        </form>
+    </div>
+
+
+
+    <!-- Button trigger addSlideModal -->
+    <div id="div_add_slide" v-show="selected == 'a_carousele'">
+        <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSlideModal"><i
+                class="fas fa-plus"></i>
+        </a>
+    </div>
+
+    <!-- addSlideModal -->
+    <div class="modal fade" id="addSlideModal" tabindex="-1" role="dialog" aria-labelledby="addSlideModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addSlideModalLabel">Add New Carousel Slide</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="container" enctype="multipart/form-data">
+                        <label for="caption_title">Caption Title</label>
+                        <input type="text" maxlength="100" class="form-control" name="caption_title" id="caption_title"
+                            v-model="new_slide.caption_title">
+                        <label for="caption">Caption</label>
+                        <input type="text" maxlength="100" class="form-control" name="caption" id="caption"
+                            v-model="new_slide.caption">
+                        <label for="slide_image">Choose Image</label>
+                        <input type="file" id="slide_image" name="slide_image" accept="image/*">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" @click="addNewSlide()">Save New Slide</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Highlight Tab -->
+    <div class="form-group highlight-group" id="highlight_data" v-show="selected == 'a_highlight'"
+        v-for="(highlight, index) in highlight_data">
+        <form class="container" enctype="multipart/form-data">
+            <label for="'highlight_text_' + highlight.id">Highlight Text: </label>
+            <textarea class="form-control" :name="'highlight_text_' + highlight.id"
+                :id="'highlight_text' + highlight.id" v-model="highlight.text"></textarea>
+            <div>Currently Displayed Image: </div>
+            <img :src="highlight.image">
+            <input type="file" :id="'highlight_image_' + highlight.id" name="'highlight_image' + highlight.id"
+                accept="image/*">
+            <div>[[highlight.image]]</div>
+            <a class="btn btn-success" @click='saveHighlight(index, highlight.id)'>Update</a>
+            <a class="btn btn-danger" @click="deleteHighlight(highlight.id)">Delete</a>
+        </form>
+    </div>
+
+    <!-- New Highlight Modal Button -->
+    <div id="div_add_highlight" v-show="selected == 'a_highlight'">
+        <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#newHighlightModal"><i
+                class="fas fa-plus"></i></a>
+    </div>
+
+    <!-- Highlight Modal -->
+    <div class="modal fade" id="newHighlightModal" tabindex="-1" role="dialog" aria-labelledby="newHighlightModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newHighlightModalLabel">New Highlight</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="container" enctype="multipart/form-data">
+                        <label for="highlight_text">Highlight Text: </label>
+                        <textarea class="form-control" name="highlight_text" id="highlight_text"
+                            v-model="new_highlight.text"></textarea>
+                        <input type="file" id="highlight_image" name="highlight_image" accept="image/*">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" @click="saveNewHighlight()">Save New
+                        Highlight</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Warning Tab -->
+    <div class="form-group warning-group" id="warning_data" v-show="selected == 'a_warning'">
+        <form class="container">
+            <input type="text" class="form-control" maxlength="255" v-model="warning_data.warning"
+                :id="'warning_' + warning_data.id">
+            <input type="checkbox" class="form-check-input" v-model="warning_data.shown" id="shown">
+            <label class="form-check-label" for="shown">Display Warning On Main Page</label>
+            <div>
+                <a class="btn btn-success" @click='saveWarning()'>Update</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Confirm Delete Modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="confirm_delete_modal" tabindex="-1" role="dialog"
+        aria-labelledby="confirm_delete_modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirm_delete_modalLabel">Confirm Delete</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are You Sure?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        @click="clearTmpData()">No</button>
+                    <button type="button" class="btn btn-danger" @click="executeDelete()">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{%endblock%}
+
+{% block javascript %}
+
+<script>
+    let app = new Vue({
+        el: '#app',
+        delimiters: ['[[', ']]'],
+        data: {
+            message: 'hello, world!',
+            selected: 'a_carousele',
+            carousele_data: [],
+            warning_data: {},
+            highlight_data: [],
+            tmp_data: {},
+            modal_display: '',
+            new_slide: {
+                caption: '',
+                caption_title: '',
+            },
+            new_highlight: {
+                text: '',
+            }
+        },
+        methods: {
+            clearTmpData: function () {
+                this.tmp_data = {}
+            },
+            executeDelete: function () {
+                console.log('Starting executeDelete')
+                console.log(this.tmp_data)
+                axios({
+                    url: '{% url "mirmir_app:execute_delete" %}',
+                    method: 'POST',
+                    data: this.tmp_data,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                }).then(response => {
+                    console.log(response.data)
+                    if (this.tmp_data['type'] == 'slide') {
+                        this.carousele_data = response.data['slides']
+                        $('#delete_carousel_toast').toast({ delay: 2000 })
+                        $('#delete_carousel_toast').toast('show')
+                    } else {
+                        $('#delete_page_highlight_toast').toast({ delay: 2000 })
+                        $('#delete_page_highlight_toast').toast('show')
+                        this.highlight_data = response.data['highlight_data']
+                    }
+                    this.clearTmpData()
+                    $('#confirm_delete_modal').modal('hide')
+                })
+
+                console.log('Leaving executeDelete')
+            },
+            saveWarning: function () {
+                console.log('Starting saveWarning')
+                console.log(this.warning_data)
+                axios({
+                    url: '{% url "mirmir_app:save_warning" %}',
+                    method: 'POST',
+                    data: {
+                        'text': this.warning_data.warning,
+                        'shown': this.warning_data.shown,
+                    },
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                }).then(response => {
+                    console.log(response.data)
+                    this.getWarning()
+                    $('#warning_toast').toast({ delay: 2000 })
+                    $('#warning_toast').toast('show')
+                    console.log('Exiting saveWarning')
+                })
+            },
+
+
+            /////////////////////////////////////
+            //        Highlight Methods        //
+            /////////////////////////////////////
+            deleteHighlight: function (id) {
+                this.tmp_data = {
+                    type: 'highlight',
+                    id: id,
+                }
+                $('#confirm_delete_modal').modal('show')
+            },
+            saveHighlight: function (pos, id) {
+                console.log('Starting saveHighlight...')
+                console.log(this.highlight_data[pos])
+                let image_data = new FormData()
+                let image_file = document.querySelector('#highlight_image_' + id)
+                image_data.append("image", image_file.files[0])
+                image_data.append("highlight_data", JSON.stringify(this.highlight_data[pos]))
+                axios({
+                    url: '{% url "mirmir_app:save_highlight" %}',
+                    method: 'POST',
+                    data: image_data,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    }
+                }).then(response => {
+                    console.log(response.data)
+                    this.getHighlights()
+                    $('#update_page_highlight_toast').toast({ delay: 2000 })
+                    $('#update_page_highlight_toast').toast('show')
+                    console.log('Exiting saveHighlight')
+                })
+            },
+            getHighlights: function () {
+                axios({
+                    url: '{% url "mirmir_app:highlights" %}',
+                    method: 'GET'
+                }).then(response => {
+                    console.log(response)
+                    this.highlight_data = response.data['highlight_data']
+                })
+            },
+            saveNewHighlight: function () {
+                console.log('Starting saveNewHighlight ...')
+                let data = new FormData()
+                let image_file = document.querySelector('#highlight_image')
+                data.append("image", image_file.files[0])
+                data.append("text", this.new_highlight['text'])
+                console.log(data)
+                axios({
+                    url: '{% url "mirmir_app:save_new_highlight" %}',
+                    method: 'POST',
+                    data: data,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token}}'
+                    }
+                }).then(response => {
+                    console.log(response.data)
+                    this.highlight_data = response.data['highlight_data']
+                    this.new_highlight['text'] = ''
+                    $('#newHighlightModal').modal('hide')
+                    $('#new_page_highlight_toast').toast({ delay: 2000 })
+                    $('#new_page_highlight_toast').toast('show')
+                    console.log('Exiting saveNewHighlight')
+                })
+
+                console.log('Exiting saveNewHighlight')
+            },
+
+
+
+            //////////////////////////////////////
+            //        Carousel Methods          //
+            //////////////////////////////////////
+            deleteSlide: function (id) {
+                this.tmp_data = {
+                    type: 'slide',
+                    id: id,
+                }
+                $('#confirm_delete_modal').modal('show')
+            },
+            saveSlide: function (pos, id) {
+                console.log('Starting saveSlide...')
+                console.log(this.carousele_data[pos])
+                let image_data = new FormData()
+                let image_file = document.querySelector('#slide_image_' + id)
+                image_data.append("image", image_file.files[0])
+                image_data.append("slide_data", JSON.stringify(this.carousele_data[pos]))
+                axios({
+                    url: '{% url "mirmir_app:save_slide" %}',
+                    method: 'POST',
+                    data: image_data,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    }
+                }).then(response => {
+                    console.log(response.data)
+                    this.getCarousele()
+                    $('#update_carousel_toast').toast({ delay: 2000 })
+                    $('#update_carousel_toast').toast('show')
+                    console.log('Exiting saveSlide')
+                })
+            },
+            getCarousele: function () {
+                axios({
+                    url: '{% url "mirmir_app:get_carousele" %}',
+                    method: 'GET'
+                }).then(response => {
+                    console.log(response)
+                    this.carousele_data = response.data['slides']
+                })
+            },
+            addNewSlide: function () {
+                let data = new FormData()
+                let image_file = document.querySelector('#slide_image')
+                data.append("image", image_file.files[0])
+                console.log('Starting addNewSlide')
+                data.append("caption", this.new_slide.caption)
+                data.append("caption_title", this.new_slide.caption_title)
+                axios({
+                    url: '{% url "mirmir_app:add_new_slide" %}',
+                    method: 'POST',
+                    data: data,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    }
+                }).then(response => {
+                    console.log(response.data)
+                    this.new_slide.caption = ''
+                    this.new_slide.caption_title = ''
+                    $('#addSlideModal').modal('hide')
+                    this.getCarousele()
+                    $('#new_carousel_toast').toast({ delay: 2000 })
+                    $('#new_carousel_toast').toast('show')
+                })
+                console.log('Exiting addNewSlide')
+            },
+            checkOrder: function (arr) {
+                for (i = 0; i < arr.len(); i++) {
+                    if ((i + 1) != arr[i].display_order) {
+                        return false
+                    }
+                }
+                return true
+            },
+            getWarning: function () {
+                axios({
+                    url: '{% url "mirmir_app:get_warning" %}',
+                    method: 'GET'
+                }).then(response => {
+                    console.log(response)
+                    this.warning_data = response.data
+                })
+            }
+        },
+        created: function () {
+            this.getCarousele()
+            this.getHighlights()
+            this.getWarning()
+            this.$forceUpdate()
+        }
+    })
+</script>
+
+
+{% endblock %}
