@@ -17,7 +17,7 @@ Vue JS
 
 The following link will take you to a pdf describing the models utilized to generate a Django database.
 
-[Link To Models](../diagrams/Models.pdf)
+[Link To Models](/../diagrams/Models.pdf)
 
 ## Development Plan
 
@@ -25,7 +25,7 @@ The following link will take you to a pdf describing the models utilized to gene
 
 The following diagram shows the initial plan for development of the web application. Each 'sprint' is allocated a five day work week of seven hour sessions.
 
-![Sprint Plan](../diagrams/SprintPlanning.png)
+![Sprint Plan](https://github.com/mcbridz/deployed_portfolio/blob/main/diagrams/SprintPlanning.png)
 
 ### Page Features
 
