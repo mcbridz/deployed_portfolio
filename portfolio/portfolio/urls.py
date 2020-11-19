@@ -24,4 +24,4 @@ urlpatterns = [
     path('urlshortener/', include('urlshortener.urls')),
     path('pokedex/', include('pokedex.urls')),
     path('blog/', include('blog.urls')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.PROFILE_PIC_URL, document_root=settings.PROFILE_PIC_ROOT)

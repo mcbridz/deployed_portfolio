@@ -49,14 +49,17 @@
 <table class="table">
     <tbody>
         <tr>
-            <th class="feed_pic"><img src="{{post.user.profile.profile_picture.url}}"></th>
+            <th class="feed_pic"><img
+                    src="{% if post.user.profile_picture is none %} https://placekitten.com/200/300 {% else %} {{post.userprofile_picture.url}} {% endif %}">
+            </th>
             <th class="top_row">
-                <span>{{post}}</span><span><a href="{% url 'blog_app:post_view' post.id %}">View Post</a></span>
+                <span>{{post.post_title}}</span><span><a href="{% url 'blog_app:post_view' post.id %}">View
+                        Post</a></span>
             </th>
         </tr>
         <tr>
-            <th>{{post.user.username}}</th>
-            <th>{{post.body|truncatechars:150}}</th>
+            <th>{{post.user}}</th>
+            <th>{{post.post_text|truncatechars:150}}</th>
         </tr>
     </tbody>
 </table>

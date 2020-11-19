@@ -22,7 +22,21 @@ def index(request):
 
 
 def home(request):
-    feed = BlogPost.objects.all().order_by('-date_created')
+    feed_data = BlogPost.objects.all().order_by('-date_created')
+    feed = []
+    for post in feed_data:
+        # print('***********************************************')
+        # print(post.user.profile_picture == '')
+        # print('***********************************************')
+        feed.append({
+            'id': post.id,
+            'post_text': post.body,
+            'post_title': post.title,
+            'image': post.image.url,
+            'user': post.user.login_name.username,
+            'user_image': '' if post.user.profile_picture == '' else post.user.profile_picture.url,
+            'date': post.date_created.strftime('%m/%d/%Y'),
+        })
     authenticated = False
     if request.user.is_authenticated:
         authenticated = True
@@ -103,7 +117,7 @@ def save_post(request):
     # print(blog_data)
     title = blog_data['title']
     body = blog_data['body']
-    blog_post = BlogPost(title=title, body=body, user=request.user)
+    blog_post = BlogPost(title=title, body=body, user=request.user.profile)
     if request.FILES.get('image', False):
         image = request.FILES['image']
         blog_post.image = image
@@ -140,7 +154,7 @@ def comment_detail(request, comment_id):
 @login_required
 def profile(request):
     posts = BlogPost.objects.filter(
-        user=request.user).order_by('-date_created')
+        user=request.user.profile).order_by('-date_created')
     print(posts)
     context = {
         'user': request.user,
