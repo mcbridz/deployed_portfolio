@@ -14,6 +14,12 @@
         border: 3px solid black;
         border-radius: 5px;
         justify-content: center;
+        background-color: black;
+    }
+
+    .carousel-item.active {
+        display: flex;
+        justify-content: center;
     }
 
     #whoamititle {
@@ -28,12 +34,8 @@
         align-items: center;
     }
 
-    img {
-        max-height: 100%;
-    }
-
-    #crazyface>img {
-        max-width: 100%;
+    .carousel-item {
+        height: 100%;
     }
 
     #bottom_label {
@@ -41,6 +43,15 @@
         bottom: 10%;
         text-align: center;
         z-index: -1;
+    }
+
+    img {
+        height: 580px !important;
+    }
+
+    .carousel-caption {
+        background-color: rgba(0, 0, 0, 0.4);
+        border-radius: 7px;
     }
 </style>
 {% endblock %}
@@ -50,85 +61,222 @@
     <div id="whoami" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="{% static 'html_css/aschoolgraduation.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/aschoolgraduation.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Graduation From Nuclear Field A-School</h5>
+                    <p>Goose Creek, SC 2010</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/busanalley.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/busanalley.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Western-Pacific Deployment CVN-70</h5>
+                    <p>Busan, South Korea 2017</p>
+                    <p>The differences in urban design are pretty substantial.</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/busanshrine.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/busanshrine.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Western-Pacific Deployment CVN-70</h5>
+                    <p>Busan, South Korea 2017</p>
+                    <p>Shaolin Temple on the coastline.</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/busanstreet.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/busanstreet.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Western-Pacific Deployment CVN-70</h5>
+                    <p>Busan, South Korea 2017</p>
+                    <p>Going from one place to another on foot was its own adventure.</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/busantemple.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/busantemple.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Western-Pacific Deployment CVN-70</h5>
+                    <p>Busan, South Korea 2017</p>
+                    <p>This cultural center was found in what I think was the historic district of Busan.</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/busanyolo.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/busanyolo.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Western-Pacific Deployment CVN-70</h5>
+                    <p>Busan, South Korea 2017</p>
+                    <p>Just a funny western idiom appropriation.</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/cadettraining.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/cadettraining.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Cadet Training, NGCSU</h5>
+                    <p>Dahlonega, GA 2005</p>
+                </div>
             </div>
             <div class="carousel-item" id="crazyface">
                 <img src="{% static 'html_css/crazyface.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Whaaaaaa?!</h5>
+                    <p>Keizer, OR 2019</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/firststation.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/firststation.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Everything I Owned For Deployment</h5>
+                    <p>San Diego, CA 2012</p>
+                    <p>When I was sent to my first duty station in the Navy, my ship was already on deployment. This was
+                        everything I could take to go meet them in the Arabian Gulf.</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/flightdeck.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/flightdeck.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Flight Deck</h5>
+                    <p>Somewhere In The Arabian Gulf, 2012</p>
+                    <p>It is rare to get to go on the flightdeck while operating. I wanted to take some pictures of the
+                        experience.</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/flightdeck2.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/flightdeck2.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Flight Deck</h5>
+                    <p>Somewhere In The Arabian Gulf, 2012</p>
+                    <p>It is rare to get to go on the flightdeck while operating. I wanted to take some pictures of the
+                        experience.</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/hangarbay.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/hangarbay.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Hangar Bay</h5>
+                    <p>Somewhere In The Arabian Gulf, 2012</p>
+                    <p>This is the most open space within the skin of the ship, it is packed like this on deployment,
+                        while being near-empty when not.</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/inthewater.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/inthewater.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Leaving For Port Call</h5>
+                    <p>Perth, Australia</p>
+                    <p>When a port is not deep enough for a large ship, you ferry off like this. I don't think the guy
+                        caught in my shot appreciated it much.</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/kilt.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/kilt.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Kilt!</h5>
+                    <p>Keizer, OR 2018</p>
+                    <p>Getting in touch with my ancestoral roots. This pattern was the closest I could find to the
+                        MacBride clan.</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/kittychilling.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/kittychilling.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Chilling With My Buddy!</h5>
+                    <p>Keizer, OR 2019</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/kittyshadows.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/kittyshadows.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>A beautiful sight in contrast!</h5>
+                    <p>Keizer, OR 2018</p>
+                    <p>My and my room-mates' kitty getting along for one of the first times. They get along famously
+                        now.</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/kittystudying.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/kittystudying.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>My Cat Helping Me Study</h5>
+                    <p>Keizer, OR 2018</p>
+                    <p>See Dad! I'm helping!</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/lastsight.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/lastsight.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>The Last Time</h5>
+                    <p>Manila, Philippines, 2018</p>
+                    <p>The last time I've seen the ship I worked on for six years.</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/mib.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/mib.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>~We are the Men In Blaaaa~aaack!</h5>
+                    <p>San Diego, CA 2016</p>
+                    <p>My room-mate and I going out for Halloween.</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/nerdkitty.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/nerdkitty.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>My First Few Months</h5>
+                    <p>Keizer, OR 2018</p>
+                    <p>My cat's favorite napping place when I was spending a lot of time in the living room on the PS4.
+                        Must have been warm and cozy, I'll clean out the PS4 later.</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/nerdsandplanes.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/nerdsandplanes.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>The Right Stuff?</h5>
+                    <p>Somewhere In The Arabian Gulf, 2012</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/perth.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/perth.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Western-Pacific Deployment CVN-70</h5>
+                    <p>Perth, Australia 2012</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/perth2.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/perth2.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Western-Pacific Deployment CVN-70</h5>
+                    <p>Perth, Australia 2012</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/pikachu.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/pikachu.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Western-Pacific Deployment CVN-70</h5>
+                    <p>Busan, South Korea 2015</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/picnik.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/picnik.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Steel Beach Picnic</h5>
+                    <p>Somewhere In The Arabian Gulf, 2012</p>
+                    <p>When you're out to sea for a long time, sometimes the ship will have a barbeque up on the flight
+                        deck like this to change pace.</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/prettyocean.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/prettyocean.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Perks Of The Job</h5>
+                    <p>Somewhere Around Australia, 2012</p>
+                    <p>This shot was taken from the hangar bay. The shot doesn't do the memory justice.</p>
+                </div>
             </div>
             <div class="carousel-item">
-                <img src="{% static 'html_css/starwars.jpg' %}" class="d-block w-100" alt="...">
+                <img src="{% static 'html_css/starwars.jpg' %}" class="d-block" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>The Last Jedi Midnight Premiere</h5>
+                    <p>San Diego, CA 2017</p>
+                    <p>Having some fun entertaining folks with a little lightsaber fight while we wait to be let into
+                        the theater.</p>
+                </div>
             </div>
         </div>
         <a class="carousel-control-prev" href="#whoami" role="button" data-slide="prev">
