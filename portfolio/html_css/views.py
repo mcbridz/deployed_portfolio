@@ -11,36 +11,40 @@ def bootstrap_index(request):
 
 
 def cats(request):
-    return render(request, 'html_css/cats.html')
+    return render(request, 'html_css/bootstrap_cats.html')
 
 
 def unit_converter(request):
-    return render(request, 'html_css/unit-converter.html')
+    return render(request, 'html_css/bootstrap_unit-converter.html')
 
 
 def password_generator(request):
-    return render(request, 'html_css/random-password-generator.html')
+    return render(request, 'html_css/bootstrap_random-password-generator.html')
 
 
 def number_to_phrase(request):
-    return render(request, 'html_css/number-to-phrase.html')
+    return render(request, 'html_css/bootstrap_number-to-phrase.html')
 
 
 def grading(request):
-    return render(request, 'html_css/grading.html')
+    return render(request, 'html_css/bootstrap_grading.html')
 
 
 def todo_list(request):
-    return render(request, 'html_css/to-do-list.html')
+    return render(request, 'html_css/bootstrap_to-do-list.html')
 
 
 def rotN(request):
-    return render(request, 'html_css/rotN.html')
+    return render(request, 'html_css/bootstrap_rotN.html')
 
 
 def weather(request):
-    return render(request, 'html_css/weather.html')
+    return render(request, 'html_css/bootstrap_weather.html')
 
 
 def quiz(request):
-    return render(request, 'html_css/quiz.html')
+    return render(request, 'html_css/bootstrap_quiz.html')
+
+
+def materialize_index(request):
+    return render(request, 'html_css/materialize_index.html')

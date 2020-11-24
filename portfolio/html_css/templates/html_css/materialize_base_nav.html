@@ -1,0 +1,12 @@
+<nav class="nav-extended container">
+    <div class="nav-wrapper">
+        <a href="{% url 'html_css:materialize_index' %}" class="brand-logo">Zachary McBride</a>
+        <a href="#" data-target="sidenav_links" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            {% include 'html_css/materialize_base_nav_lis.html' %}
+        </ul>
+    </div>
+</nav>
+<ul class="sidenav" id="sidenav_links">
+    {% include 'html_css/materialize_base_nav_lis.html' %}
+</ul>

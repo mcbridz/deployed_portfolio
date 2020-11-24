@@ -16,4 +16,5 @@ urlpatterns = [
     path('bootstrap/rotN/', views.rotN, name='rotN'),
     path('bootstrap/weather/', views.weather, name='weather'),
     path('bootstrap/quiz/', views.quiz, name='quiz'),
+    path('materialize/index/', views.materialize_index, name='materialize_index')
 ]
