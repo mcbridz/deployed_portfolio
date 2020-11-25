@@ -25,6 +25,17 @@
                 <a href="#!" class="dropdown-trigger" data-target="django_demos">Django Demos <i
                         class="material-icons right">arrow_drop_down</i></a>
             </li>
+            <li>
+                <a href="#!" class="dropdown-trigger" data-target="django_mockups">Full-Site Mockups<i
+                        class="material-icons right">arrow_drop_down</i></a>
+            </li>
+
+            <ul class="dropdown-content" id="django_mockups">
+                <li>
+                    <a href="{% url 'mirmir_app:index' %}" target="_blank">Mirmir Meadery
+                        (small-business goods sales site)</a>
+                </li>
+            </ul>
 
             <ul class="dropdown-content" id="django_demos">
                 <li>
@@ -43,10 +54,10 @@
 
             <ul id="html_css_demos" class="dropdown-content">
                 <li>
-                    <a href="#!">Axios/Ajax/Vue Demo CATS!</a>
+                    <a href="{% url 'html_css:materialize_cats' %}">Axios/Ajax/Vue Demo CATS!</a>
                 </li>
                 <li>
-                    <a href="#!">Unit Converter JS</a>
+                    <a href="{% url 'html_css:materialize_unit_converter' %}">Unit Converter JS</a>
                 </li>
                 <li>
                     <a href="#!">Random Password Generator JS</a>
@@ -120,25 +131,35 @@
         <a href="#!" class="dropdown-trigger" data-target="side_django_demos">Django Demos <i
                 class="material-icons right">arrow_drop_down</i></a>
     </li>
+    <li>
+        <a href="#!" class="dropdown-trigger" data-target="side_django_mockups">Full-Site Mockups<i
+                class="material-icons right">arrow_drop_down</i></a>
+    </li>
 
-    <ul class="side_dropdown-content" id="django_demos">
+    <ul class="dropdown-content" id="side_django_mockups">
         <li>
-            <a href="#!">URL Shortener (Link Redirection)</a>
+            <a href="{% url 'mirmir_app:index' %}" target="_blank">Mirmir Meadery</a>
+        </li>
+    </ul>
+
+    <ul class="dropdown-content" id="side_django_demos">
+        <li>
+            <a href="#!">URL Shortener</a>
         </li>
         <li>
-            <a href="#!">Pokedex (raw CSS Custom Mngmt Commands)</a>
+            <a href="#!">Pokedex</a>
         </li>
         <li>
-            <a href="#!">Blog (login commenting)</a>
+            <a href="#!">Blog</a>
         </li>
         <li>
-            <a href="#!">Library (Vue.JS Pagination Favoriting)</a>
+            <a href="#!">Library</a>
         </li>
     </ul>
 
     <ul id="side_html_css_demos" class="dropdown-content">
         <li>
-            <a href="#!">Axios/Ajax/Vue Demo CATS!</a>
+            <a href="{% url 'html_css:materialize_cats' %}">Axios/Ajax/Vue Demo CATS!</a>
         </li>
         <li>
             <a href="#!">Unit Converter JS</a>

@@ -1,0 +1,56 @@
+{% extends 'html_css/materialize_base.html' %}
+{% load static %}
+{% block title %}Unit Converter{% endblock %}
+{% block style %}
+<style>
+</style>
+{% endblock %}
+
+{% block body %}
+
+<div class="container" id="below-navbar">
+    <div class="">
+        <div class="" id="value-container">
+            <input id="value" type="number" />
+        </div>
+        <div class="input-field">
+            <select id="src_units">
+                <!-- ["m", "mi", "km", "in", "yd"] -->
+                <option value="m">Meters</option>
+                <option value="ft">Feet</option>
+                <option value="mi">Miles</option>
+                <option value="in">Iches</option>
+                <option value="km">Kilometers</option>
+                <option value="yd">Yards</option>
+            </select>
+            <label>Source Units</label>
+        </div>
+        <div class="">
+            =>
+        </div>
+        <div class="input-field">
+            <select id="dest_units">
+                <!-- ["m", "mi", "km", "in", "yd"] -->
+                <option value="m">Meters</option>
+                <option value="ft">Feet</option>
+                <option value="mi">Miles</option>
+                <option value="in">Iches</option>
+                <option value="km">Kilometers</option>
+                <option value="yd">Yards</option>
+            </select>
+            <label>Destination Units</label>
+        </div>
+        <div class="" id="calculate">
+            <button type="button" class="btn btn-secondary" id="calc_but">Calculate</button>
+        </div>
+    </div>
+    <div class="container">
+        <div id="output_div"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<!--Custom JavaScript-->
+<script src="{% static 'html_css/unit-converter.js' %}"></script>
+{% endblock %}

@@ -16,5 +16,9 @@ urlpatterns = [
     path('bootstrap/rotN/', views.rotN, name='rotN'),
     path('bootstrap/weather/', views.weather, name='weather'),
     path('bootstrap/quiz/', views.quiz, name='quiz'),
-    path('materialize/index/', views.materialize_index, name='materialize_index')
+    path('materialize/index/', views.materialize_index, name='materialize_index'),
+    path('materialize/axios_ajax_vue_demo/',
+         views.materialize_cats, name='materialize_cats'),
+    path('materialize/unit_converter/', views.materialize_unit_converter,
+         name='materialize_unit_converter'),
 ]

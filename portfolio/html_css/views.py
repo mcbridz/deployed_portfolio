@@ -48,3 +48,11 @@ def quiz(request):
 
 def materialize_index(request):
     return render(request, 'html_css/materialize_index.html')
+
+
+def materialize_cats(request):
+    return render(request, 'html_css/materialize_cats.html')
+
+
+def materialize_unit_converter(request):
+    return render(request, 'html_css/materialize_unit_converter.html')

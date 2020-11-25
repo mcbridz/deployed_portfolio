@@ -11,4 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // var drops_instances = M.Dropdown.init(drops, drops_option)
     var drop_elems = document.querySelectorAll('.dropdown-trigger')
     var drop_instances = M.Dropdown.init(drop_elems, {})
+    var sel_elems = document.querySelectorAll('select')
+    var sel_instances = M.Dropdown.init(sel_elems, {})
 })
