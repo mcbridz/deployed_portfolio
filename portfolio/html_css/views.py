@@ -72,3 +72,7 @@ def materialize_grading(request):
 
 def materialize_todo_list(request):
     return render(request, 'html_css/materialize_to-do-list.html')
+
+
+def materialize_rotN(request):
+    return render(request, 'html_css/materialize_rotN.html')

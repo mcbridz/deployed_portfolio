@@ -1,0 +1,133 @@
+{% extends 'html_css/materialize_base.html' %}
+{% load static %}
+{% block title %}rotN{% endblock %}
+{% block style %}
+<!--Vue-->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<style>
+    #instructions {
+        margin-bottom: 3%;
+        text-align: center;
+    }
+
+    .form-group {
+        display: flex;
+        justify-content: center !important;
+    }
+
+    .row {
+        justify-content: center !important;
+    }
+
+    #input_rotation {
+        width: 50px;
+    }
+
+    .log-item div {
+        text-align: left;
+    }
+
+    .log-text {
+        width: 100%;
+        margin-left: 3%;
+    }
+
+    .log-item {
+        border-bottom: 1px solid black;
+        padding-bottom: 1%;
+    }
+
+    button {
+        margin-bottom: 4px;
+    }
+
+    @media only screen and (max-width: 992px) {
+        .input-group-text {
+            display: none;
+        }
+
+        .input-group-prepend .form-control {
+            width: 100%;
+        }
+
+        #input_fields {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* #app {
+                padding: 12px;
+            } */
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<div class="container" id="instructions">Type or load saved messages, then change the rotation factor (number) to
+    convert between plain-text and cypher-text based on a long-string rotation of concatinated
+    <b>[A-Z][a-z][0-9][!@#$%^&*()-_=+[{]}|;:'\"\\/,.? ]</b>(angle brackets are included).</div>
+<div id="app">
+    <div class="container form-group" id="div_rotation">
+        <input v-on:input="encrypt_text" v-model="rotation" type="number" id="input_rotation" />
+    </div>
+    <div class="container form-group">
+        <div class="row" id="input_fields">
+            <div class="col col-5-sm input-group-prepend">
+                <!--col-xs-12-->
+                <span class="input-group-text">Plain-Text</span>
+                <textarea rows="4" cols="50" class="form-control" label="input plain-text here" v-model="plain_text"
+                    placeholder="plain-text here" id="input_plain_text" v-on:input="encrypt_text"></textarea>
+            </div>
+            <div class="col-2 buttons">
+                <div class="row">
+                    <div id="encrypt">
+                        <button class="btn btn-primary" v-on:click="save_text" id="btn_save">Save</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="clear">
+                        <button class="btn btn-primary" v-on:click="clear_text" id="btn_clear">Clear</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col col-5-sm input-group-prepend">
+                <span class="input-group-text">Cypher-text</span>
+                <textarea rows="4" cols="50" class="form-control" label="input cypher-text here" v-model="cypher_text"
+                    v-on:input="decrypt_text" placeholder="cypher-text here" id="input_cypher_text"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div id="log">
+        <div class="row log-item" v-for="(item, index) in data">
+            <div class="col-5">
+                <div class="row">
+                    Plain Text
+                </div>
+                <textarea class="row log-text">[[item.pt]]</textarea>
+            </div>
+            <div class="col-5">
+                <div class="row">
+                    Cypher Text
+                </div>
+                <textarea class="row log-text">[[item.ct]]</textarea>
+            </div>
+            <div class="col-2">
+                <div class="row">Rotation:</div>
+                <div class="row">[[item.rv]]</div>
+                <div class="row">
+                    <button class="btn btn-primary" v-on:click="load(index)">Load</button>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary" v-on:click="delete_item(index)">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+{% block javascript %}
+<script src="{% static 'html_css/rotN.js' %}"></script>
+{% endblock %}
