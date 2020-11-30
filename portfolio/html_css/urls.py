@@ -21,4 +21,6 @@ urlpatterns = [
          views.materialize_cats, name='materialize_cats'),
     path('materialize/unit_converter/', views.materialize_unit_converter,
          name='materialize_unit_converter'),
+    path('materialize/password_generator/', views.materialize_rnd_password_gen,
+         name='materialize_password_generator'),
 ]

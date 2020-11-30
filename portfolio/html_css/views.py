@@ -56,3 +56,7 @@ def materialize_cats(request):
 
 def materialize_unit_converter(request):
     return render(request, 'html_css/materialize_unit_converter.html')
+
+
+def materialize_rnd_password_gen(request):
+    return render(request, 'html_css/materialize_random-password-generator.html')
