@@ -3,42 +3,66 @@
 {% block title %}Unit Converter{% endblock %}
 {% block style %}
 <style>
+    #below-navbar {
+        margin-top: 15px;
+    }
+
+    #conversion_suite {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    #value-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #value {
+        margin-bottom: 15px;
+    }
 </style>
 {% endblock %}
 
 {% block body %}
 
 <div class="container" id="below-navbar">
-    <div class="">
+    <div id="conversion_suite">
         <div class="" id="value-container">
+            <label>Source Value</label>
             <input id="value" type="number" />
         </div>
-        <div class="input-field">
-            <select id="src_units">
-                <!-- ["m", "mi", "km", "in", "yd"] -->
-                <option value="m">Meters</option>
-                <option value="ft">Feet</option>
-                <option value="mi">Miles</option>
-                <option value="in">Iches</option>
-                <option value="km">Kilometers</option>
-                <option value="yd">Yards</option>
-            </select>
-            <label>Source Units</label>
+        <div>
+            <div class="input-field">
+                <select id="src_units">
+                    <!-- ["m", "mi", "km", "in", "yd"] -->
+                    <option value="m">Meters</option>
+                    <option value="ft">Feet</option>
+                    <option value="mi">Miles</option>
+                    <option value="in">Iches</option>
+                    <option value="km">Kilometers</option>
+                    <option value="yd">Yards</option>
+                </select>
+                <label>Source Units</label>
+            </div>
         </div>
         <div class="">
             =>
         </div>
-        <div class="input-field">
-            <select id="dest_units">
-                <!-- ["m", "mi", "km", "in", "yd"] -->
-                <option value="m">Meters</option>
-                <option value="ft">Feet</option>
-                <option value="mi">Miles</option>
-                <option value="in">Iches</option>
-                <option value="km">Kilometers</option>
-                <option value="yd">Yards</option>
-            </select>
-            <label>Destination Units</label>
+        <div>
+            <div class="input-field">
+                <select id="dest_units">
+                    <!-- ["m", "mi", "km", "in", "yd"] -->
+                    <option value="m">Meters</option>
+                    <option value="ft">Feet</option>
+                    <option value="mi">Miles</option>
+                    <option value="in">Iches</option>
+                    <option value="km">Kilometers</option>
+                    <option value="yd">Yards</option>
+                </select>
+                <label>Destination Units</label>
+            </div>
         </div>
         <div class="" id="calculate">
             <button type="button" class="btn btn-secondary" id="calc_but">Calculate</button>
@@ -53,4 +77,12 @@
 {% block javascript %}
 <!--Custom JavaScript-->
 <script src="{% static 'html_css/unit-converter.js' %}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var sel_elem = document.querySelector('#src_units')
+        var sel_elem2 = document.querySelector('#dest_units')
+        var sel_instances = M.FormSelect.init(sel_elem, {})
+        var sel_instances2 = M.FormSelect.init(sel_elem2, {})
+    })
+</script>
 {% endblock %}
