@@ -60,3 +60,7 @@ def materialize_unit_converter(request):
 
 def materialize_rnd_password_gen(request):
     return render(request, 'html_css/materialize_random-password-generator.html')
+
+
+def materialize_num_to_phrase(request):
+    return render(request, 'html_css/materialize_number-to-phrase.html')

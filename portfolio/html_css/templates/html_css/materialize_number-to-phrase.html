@@ -1,0 +1,51 @@
+{% extends 'html_css/materialize_base.html' %}
+{% load static %}
+{% block title %}Number To Phrase{% endblock %}
+{% block style %}
+<style>
+    #instructions {
+        text-align: center;
+    }
+
+    .container {
+        margin-top: 3%;
+    }
+
+    #output_div {
+        flex-direction: column;
+    }
+
+    #gen_but {
+        margin-top: 5px;
+    }
+
+    .col-sm {
+        display: flex;
+        justify-content: center;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+
+<div class="container" id="instructions">
+    Enter your number, then click "Phrase Me!" to see your phrase below!
+</div>
+<div class="container" id="below-nav">
+    <div class="row">
+        <div class="col-sm">
+            <input id="num-input" type="number" />
+        </div>
+        <div class="col-sm" id="generate-container">
+            <button type="button" class="btn btn-secondary" id="gen_but">Phrase Me!</button>
+        </div>
+    </div>
+    <div class="container">
+        <div id="output_div"></div>
+    </div>
+</div>
+{% endblock %}
+{% block javascript %}
+<!--Custom JavaScript-->
+<script src="{% static 'html_css/number-to-phrase.js' %}"></script>
+{% endblock %}

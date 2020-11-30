@@ -23,4 +23,6 @@ urlpatterns = [
          name='materialize_unit_converter'),
     path('materialize/password_generator/', views.materialize_rnd_password_gen,
          name='materialize_password_generator'),
+    path('materialize/number_to_phrase/', views.materialize_num_to_phrase,
+         name='materialize_num_to_phrase'),
 ]
