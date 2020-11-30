@@ -68,3 +68,7 @@ def materialize_num_to_phrase(request):
 
 def materialize_grading(request):
     return render(request, 'html_css/materialize_grading.html')
+
+
+def materialize_todo_list(request):
+    return render(request, 'html_css/materialize_to-do-list.html')

@@ -1,0 +1,82 @@
+{% extends 'html_css/bootstrap_base.html' %}
+{% load static %}
+{% block title %}To-Do List{% endblock %}
+{% block style %}
+<style>
+    .container {
+        margin: 3%;
+    }
+
+    #div_instructions {
+        text-align: center;
+    }
+
+    #select_priority {
+        margin-top: 0;
+    }
+
+    label {
+        margin-bottom: 0;
+    }
+
+    #row_one {
+        align-items: flex-end;
+    }
+
+    #todolist {
+        background-color: rgba(248, 249, 250, 0.85) !important;
+    }
+
+    #select_low {
+        color: green;
+    }
+
+    #select_high {
+        color: red;
+    }
+
+    .row-entry {
+        border: 3px solid black;
+        border-radius: 3px;
+        justify-content: space-between;
+        padding: 5px;
+        text-shadow: 1px 1px black;
+    }
+</style>
+{% endblock %}
+{% block body %}
+{% include 'html_css/bootstrap_base_nav.html' %}
+
+<div class="container" id="div_instructions">Enter your "To-Do" items in the below field, click on individual items
+    in the list that populates below the enter field to strike completed items.</div>
+<div class="" id="below-navbar">
+    <div class="row container" id="row_one">
+        <div class="col-auto" id="col_input">
+            <input type="text" class="form-control" id="input_todo" placeholder="Enter To-Do Item Here" />
+        </div>
+        <div class="col-2">
+            <label>Priority</label>
+            <select class="form-control" id="select_priority">
+                <option value="black" id="select_normal">Normal</option>
+                <option value="rgb(10,255,0)" id="select_low">Low</option>
+                <option value="red" id="select_high">High</option>
+            </select>
+        </div>
+        <div class="col-1">
+            <button class="btn btn-light" id="scribe">Scribe!</button>
+        </div>
+    </div>
+</div>
+
+<div class="container" id="todolist">
+
+</div>
+
+
+
+{% endblock %}
+{% block javascript %}
+<!--Custom JavaScript-->
+<!-- <script src="./to-do-list.js"></script> -->
+<script src="{% static 'html_css/to-do-list2.js' %}"></script>
+{% endblock %}

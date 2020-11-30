@@ -25,6 +25,8 @@ urlpatterns = [
          name='materialize_password_generator'),
     path('materialize/number_to_phrase/', views.materialize_num_to_phrase,
          name='materialize_num_to_phrase'),
-    path('materialize/grading', views.materialize_grading,
+    path('materialize/grading/', views.materialize_grading,
          name='materialize_grading'),
+    path('materialize/todo_list/', views.materialize_todo_list,
+         name='materialize_todo_list'),
 ]
