@@ -64,3 +64,7 @@ def materialize_rnd_password_gen(request):
 
 def materialize_num_to_phrase(request):
     return render(request, 'html_css/materialize_number-to-phrase.html')
+
+
+def materialize_grading(request):
+    return render(request, 'html_css/materialize_grading.html')
