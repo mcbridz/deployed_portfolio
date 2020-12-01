@@ -18,9 +18,7 @@
 <link href="{% static 'html_css/owfont-regular.css' %}" rel="stylesheet" type="text/css">
 
 <style>
-    body {
-        background-color: rgb(237, 241, 242);
-    }
+    body {}
 
     .data_fields {
         display: flex;
@@ -42,26 +40,26 @@
     }
 
     .weather_row {
+        display: flex;
         justify-content: center;
     }
 
     .hourly_data {
         border: 1px solid black;
-        background-color: rgba(248, 249, 250, 0.85) !important;
         flex-grow: 1;
     }
 
     .time_row {
+        display: flex;
         justify-content: center;
     }
 
     .day_row {
+        display: flex;
         justify-content: center;
     }
 
-    #app {
-        background-color: rgba(234, 239, 240, 0.85);
-    }
+    #app {}
 
     .sub_data {
         display: flex;
@@ -86,11 +84,19 @@
     }
 
     #active_row {
+        display: flex;
+        flex-direction: row;
         margin-top: 2%;
     }
 
     #btn_temp {
         margin-right: 3px;
+    }
+
+    #weather_icon_col {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 </style>
 {% endblock %}
@@ -106,7 +112,7 @@
             </div>
         </div>
         <div class="row" id="active_row">
-            <div class="col">
+            <div class="col" id="weather_icon_col">
                 <div class="row">
                     <i v-bind:class="current_weather"></i>
                 </div>
@@ -127,16 +133,16 @@
                     <h4><b>Sunset: </b> [[sunset]]</h4>
                 </div>
                 <div class="row">
-                    <button class="btn btn-secondary" :disabled="temp_not_wind" id="btn_temp"
+                    <button class="waves-effect waves-light btn" :disabled="temp_not_wind" id="btn_temp"
                         v-on:click="alternate_data">Temperature</button>
-                    <!-- <button class="btn btn-secondary">Precipitation</button> -->
-                    <button class="btn btn-secondary" :disabled="!temp_not_wind" id="btn_wind"
+                    <!-- <button class="waves-effect waves-light btn">Precipitation</button> -->
+                    <button class="waves-effect waves-light btn" :disabled="!temp_not_wind" id="btn_wind"
                         v-on:click="alternate_data">Wind</button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row container" id="div_hourly_data">
+    <div class="row" id="div_hourly_data">
         <div class="col hourly_data" v-for="hour in hourly_data">
             <div class="row time_row">[[hour.hours]]:00</div>
             <div class="row weather_row">
@@ -154,7 +160,7 @@
             </div>
         </div>
     </div>
-    <div class="row container" id="div_daily_data">
+    <div class="row" id="div_daily_data">
         <div class="col hourly_data" v-for="day in daily_data">
             <div class="row day_row">[[day.day]]</div>
             <div class="row weather_row">
