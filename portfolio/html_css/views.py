@@ -80,3 +80,7 @@ def materialize_rotN(request):
 
 def materialize_weather(request):
     return render(request, 'html_css/materialize_weather.html')
+
+
+def materialize_quiz(request):
+    return render(request, 'html_css/materialize_quiz.html')
