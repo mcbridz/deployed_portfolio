@@ -2,9 +2,16 @@
 
 /* Slideshow container */
 .slideshow-container {
-  max-width: 1000px;
+  width: fit-content;
   position: relative;
   margin: auto;
+  transition: 0.5s;
+  border-radius: 5px;
+}
+@media only screen and (max-width: 992px) {
+  .slideshow-container img {
+    max-width: 370px;
+  }
 }
 
 /* Hide the images by default */

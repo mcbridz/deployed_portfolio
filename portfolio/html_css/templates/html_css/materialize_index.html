@@ -1,271 +1,316 @@
 {% extends 'html_css/materialize_base.html' %}
 {% block title %}Materialize Home{% endblock %}
 {% block style %}
-<link rel="stylesheet" href="{% static 'html_css/slideshow.css' %}">
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'html_css/slideshow.css' %}">
+<style>
+    .numbertext {
+        background-color: rgba(0, 0, 0, 0.7);
+        border-radius: 3px;
+    }
+
+
+    img {
+        max-height: 500px;
+    }
+
+    .mySlides {
+        background-color: black;
+        display: flex;
+        justify-content: center;
+    }
+
+    #carousel {
+        margin-top: 15px;
+    }
+
+    #message>span {
+        background-color: ivory;
+        border: 1px solid lightslategray;
+        border-radius: 3px;
+        margin-bottom: 5px;
+        padding: 3px;
+    }
+
+    #message {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+</style>
 {% endblock %}
 {% block body %}
 <!-- Slideshow container -->
-<div class="slideshow-container">
-    <div class="mySlides fade">
-        <div class="numbertext">1 / 27</div>
-        <img src="{% static 'html_css/aschoolgraduation.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>Graduation From Nuclear Field A-School</h5>
-            <p>Goose Creek, SC 2010</p>
-        </div>
+<div class="container" id="carousel">
+    <div id="message">
+        <span>Custom carousel based on w3 schools tutorial for slideshow (css/js).</span>
+        <span>Dots at bottom advance slideshow by 5's from 1-25</span>
     </div>
-    <div class="mySlides fade">
-        <div class="numbertext">2 / 27</div>
-        <img src="{% static 'html_css/busanalley.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>Western-Pacific Deployment CVN-70</h5>
-            <p>Busan, South Korea 2017</p>
-            <p>The differences in urban design are pretty substantial.</p>
+    <div class="slideshow-container">
+        <div class="mySlides fade">
+            <div class="numbertext">1 / 27</div>
+            <img src="{% static 'html_css/aschoolgraduation.jpg' %}">
+            <div class="text">
+                <h5>Graduation From Nuclear Field A-School</h5>
+                <p>Goose Creek, SC 2010</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">3 / 27</div>
-        <img src="{% static 'html_css/busanshrine.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>Western-Pacific Deployment CVN-70</h5>
-            <p>Busan, South Korea 2017</p>
-            <p>Shaolin Temple on the coastline.</p>
+        <div class="mySlides fade">
+            <div class="numbertext">2 / 27</div>
+            <img src="{% static 'html_css/busanalley.jpg' %}">
+            <div class="text">
+                <h5>Western-Pacific Deployment CVN-70</h5>
+                <p>Busan, South Korea 2017</p>
+                <p>The differences in urban design are pretty substantial.</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">4 / 27</div>
-        <img src="{% static 'html_css/busanstreet.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>Western-Pacific Deployment CVN-70</h5>
-            <p>Busan, South Korea 2017</p>
-            <p>Going from one place to another on foot was its own adventure.</p>
+        <div class="mySlides fade">
+            <div class="numbertext">3 / 27</div>
+            <img src="{% static 'html_css/busanshrine.jpg' %}">
+            <div class="text">
+                <h5>Western-Pacific Deployment CVN-70</h5>
+                <p>Busan, South Korea 2017</p>
+                <p>Shaolin Temple on the coastline.</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">5 / 27</div>
-        <img src="{% static 'html_css/busantemple.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>Western-Pacific Deployment CVN-70</h5>
-            <p>Busan, South Korea 2017</p>
-            <p>This cultural center was found in what I think was the historic district of Busan.</p>
+        <div class="mySlides fade">
+            <div class="numbertext">4 / 27</div>
+            <img src="{% static 'html_css/busanstreet.jpg' %}">
+            <div class="text">
+                <h5>Western-Pacific Deployment CVN-70</h5>
+                <p>Busan, South Korea 2017</p>
+                <p>Going from one place to another on foot was its own adventure.</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">6 / 27</div>
-        <img src="{% static 'html_css/busanyolo.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>Western-Pacific Deployment CVN-70</h5>
-            <p>Busan, South Korea 2017</p>
-            <p>Just a funny western idiom appropriation.</p>
+        <div class="mySlides fade">
+            <div class="numbertext">5 / 27</div>
+            <img src="{% static 'html_css/busantemple.jpg' %}">
+            <div class="text">
+                <h5>Western-Pacific Deployment CVN-70</h5>
+                <p>Busan, South Korea 2017</p>
+                <p>This cultural center was found in what I think was the historic district of Busan.</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">7 / 27</div>
-        <img src="{% static 'html_css/cadettraining.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>Cadet Training, NGCSU</h5>
-            <p>Dahlonega, GA 2005</p>
+        <div class="mySlides fade">
+            <div class="numbertext">6 / 27</div>
+            <img src="{% static 'html_css/busanyolo.jpg' %}">
+            <div class="text">
+                <h5>Western-Pacific Deployment CVN-70</h5>
+                <p>Busan, South Korea 2017</p>
+                <p>Just a funny western idiom appropriation.</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">8 / 27</div>
-        <img src="{% static 'html_css/crazyface.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>Whaaaaaa?!</h5>
-            <p>Keizer, OR 2019</p>
+        <div class="mySlides fade">
+            <div class="numbertext">7 / 27</div>
+            <img src="{% static 'html_css/cadettraining.jpg' %}">
+            <div class="text">
+                <h5>Cadet Training, NGCSU</h5>
+                <p>Dahlonega, GA 2005</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">9 / 27</div>
-        <img src="{% static 'html_css/firststation.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>Everything I Owned For Deployment</h5>
-            <p>San Diego, CA 2012</p>
-            <p>When I was sent to my first duty station in the Navy, my ship was already on deployment. This was
-                everything I could take to go meet them in the Arabian Gulf.</p>
+        <div class="mySlides fade">
+            <div class="numbertext">8 / 27</div>
+            <img src="{% static 'html_css/crazyface.jpg' %}">
+            <div class="text">
+                <h5>Whaaaaaa?!</h5>
+                <p>Keizer, OR 2019</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">10 / 27</div>
-        <img src="{% static 'html_css/flightdeck.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>Flight Deck</h5>
-            <p>Somewhere In The Arabian Gulf, 2012</p>
-            <p>It is rare to get to go on the flightdeck while operating, as a person that works in the engine
-                room. I wanted to take some pictures of the
-                experience.</p>
+        <div class="mySlides fade">
+            <div class="numbertext">9 / 27</div>
+            <img src="{% static 'html_css/firststation.jpg' %}">
+            <div class="text">
+                <h5>Everything I Owned For Deployment</h5>
+                <p>San Diego, CA 2012</p>
+                <p>When I was sent to my first duty station in the Navy, my ship was already on deployment. This was
+                    everything I could take to go meet them in the Arabian Gulf.</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">11 / 27</div>
-        <img src="{% static 'html_css/flightdeck2.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>Flight Deck</h5>
-            <p>Somewhere In The Arabian Gulf, 2012</p>
-            <p>It is rare to get to go on the flightdeck while operating, as a person that works in the engine
-                room. I wanted to take some pictures of the
-                experience.</p>
+        <div class="mySlides fade">
+            <div class="numbertext">10 / 27</div>
+            <img src="{% static 'html_css/flightdeck.jpg' %}">
+            <div class="text">
+                <h5>Flight Deck</h5>
+                <p>Somewhere In The Arabian Gulf, 2012</p>
+                <p>It is rare to get to go on the flightdeck while operating, as a person that works in the engine
+                    room. I wanted to take some pictures of the
+                    experience.</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">12 / 27</div>
-        <img src="{% static 'html_css/hangarbay.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>Hangar Bay</h5>
-            <p>Somewhere In The Arabian Gulf, 2012</p>
-            <p>This is the most open space within the skin of the ship, it is packed like this on deployment,
-                while being near-empty when not.</p>
+        <div class="mySlides fade">
+            <div class="numbertext">11 / 27</div>
+            <img src="{% static 'html_css/flightdeck2.jpg' %}">
+            <div class="text">
+                <h5>Flight Deck</h5>
+                <p>Somewhere In The Arabian Gulf, 2012</p>
+                <p>It is rare to get to go on the flightdeck while operating, as a person that works in the engine
+                    room. I wanted to take some pictures of the
+                    experience.</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">13 / 27</div>
-        <img src="{% static 'html_css/inthewater.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>Leaving For Port Call</h5>
-            <p>Perth, Australia</p>
-            <p>When a port is not deep enough for a large ship, you ferry off like this. I don't think the guy
-                caught in my shot appreciated it much.</p>
+        <div class="mySlides fade">
+            <div class="numbertext">12 / 27</div>
+            <img src="{% static 'html_css/hangarbay.jpg' %}">
+            <div class="text">
+                <h5>Hangar Bay</h5>
+                <p>Somewhere In The Arabian Gulf, 2012</p>
+                <p>This is the most open space within the skin of the ship, it is packed like this on deployment,
+                    while being near-empty when not.</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">14 / 27</div>
-        <img src="{% static 'html_css/kilt.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>Kilt!</h5>
-            <p>Keizer, OR 2018</p>
-            <p>Getting in touch with my ancestoral roots. This pattern was the closest I could find to the
-                MacBride clan.</p>
+        <div class="mySlides fade">
+            <div class="numbertext">13 / 27</div>
+            <img src="{% static 'html_css/inthewater.jpg' %}">
+            <div class="text">
+                <h5>Leaving For Port Call</h5>
+                <p>Perth, Australia</p>
+                <p>When a port is not deep enough for a large ship, you ferry off like this. I don't think the guy
+                    caught in my shot appreciated it much.</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">15 / 27</div>
-        <img src="{% static 'html_css/kittychilling.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>Chilling With My Buddy!</h5>
-            <p>Keizer, OR 2019</p>
+        <div class="mySlides fade">
+            <div class="numbertext">14 / 27</div>
+            <img src="{% static 'html_css/kilt.jpg' %}">
+            <div class="text">
+                <h5>Kilt!</h5>
+                <p>Keizer, OR 2018</p>
+                <p>Getting in touch with my ancestoral roots. This pattern was the closest I could find to the
+                    MacBride clan.</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">16 / 27</div>
-        <img src="{% static 'html_css/kittyshadows.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>A beautiful sight in contrast!</h5>
-            <p>Keizer, OR 2018</p>
-            <p>My and my room-mates' kitty getting along for one of the first times. They get along famously
-                now.</p>
+        <div class="mySlides fade">
+            <div class="numbertext">15 / 27</div>
+            <img src="{% static 'html_css/kittychilling.jpg' %}">
+            <div class="text">
+                <h5>Chilling With My Buddy!</h5>
+                <p>Keizer, OR 2019</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">17 / 27</div>
-        <img src="{% static 'html_css/kittystudying.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>My Cat Helping Me Study</h5>
-            <p>Keizer, OR 2018</p>
-            <p>See Dad! I'm helping!</p>
+        <div class="mySlides fade">
+            <div class="numbertext">16 / 27</div>
+            <img src="{% static 'html_css/kittyshadows.jpg' %}">
+            <div class="text">
+                <h5>A beautiful sight in contrast!</h5>
+                <p>Keizer, OR 2018</p>
+                <p>My and my room-mates' kitty getting along for one of the first times. They get along famously
+                    now.</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">18 / 27</div>
-        <img src="{% static 'html_css/lastsight.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>The Last Time</h5>
-            <p>Manila, Philippines, 2018</p>
-            <p>The last time I've seen the ship I worked on for six years.</p>
+        <div class="mySlides fade">
+            <div class="numbertext">17 / 27</div>
+            <img src="{% static 'html_css/kittystudying.jpg' %}">
+            <div class="text">
+                <h5>My Cat Helping Me Study</h5>
+                <p>Keizer, OR 2018</p>
+                <p>See Dad! I'm helping!</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">19 / 27</div>
-        <img src="{% static 'html_css/mib.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>~We are the Men In Blaaaa~aaack!</h5>
-            <p>San Diego, CA 2016</p>
-            <p>My room-mate and I going out for Halloween.</p>
+        <div class="mySlides fade">
+            <div class="numbertext">18 / 27</div>
+            <img src="{% static 'html_css/lastsight.jpg' %}">
+            <div class="text">
+                <h5>The Last Time</h5>
+                <p>Manila, Philippines, 2018</p>
+                <p>The last time I've seen the ship I worked on for six years.</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">20 / 27</div>
-        <img src="{% static 'html_css/nerdkitty.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>My First Few Months</h5>
-            <p>Keizer, OR 2018</p>
-            <p>My cat's favorite napping place when I was spending a lot of time in the living room on the PS4.
-                Must have been warm and cozy, I'll clean out the PS4 later.</p>
+        <div class="mySlides fade">
+            <div class="numbertext">19 / 27</div>
+            <img src="{% static 'html_css/mib.jpg' %}">
+            <div class="text">
+                <h5>~We are the Men In Blaaaa~aaack!</h5>
+                <p>San Diego, CA 2016</p>
+                <p>My room-mate and I going out for Halloween.</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">21 / 27</div>
-        <img src="{% static 'html_css/nerdsandplanes.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>The Right Stuff?</h5>
-            <p>Somewhere In The Arabian Gulf, 2012</p>
+        <div class="mySlides fade">
+            <div class="numbertext">20 / 27</div>
+            <img src="{% static 'html_css/nerdkitty.jpg' %}">
+            <div class="text">
+                <h5>My First Few Months</h5>
+                <p>Keizer, OR 2018</p>
+                <p>My cat's favorite napping place when I was spending a lot of time in the living room on the PS4.
+                    Must have been warm and cozy, I'll clean out the PS4 later.</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">22 / 27</div>
-        <img src="{% static 'html_css/perth.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>Western-Pacific Deployment CVN-70</h5>
-            <p>Perth, Australia 2012</p>
+        <div class="mySlides fade">
+            <div class="numbertext">21 / 27</div>
+            <img src="{% static 'html_css/nerdsandplanes.jpg' %}">
+            <div class="text">
+                <h5>The Right Stuff?</h5>
+                <p>Somewhere In The Arabian Gulf, 2012</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">23 / 27</div>
-        <img src="{% static 'html_css/perth2.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>Western-Pacific Deployment CVN-70</h5>
-            <p>Perth, Australia 2012</p>
+        <div class="mySlides fade">
+            <div class="numbertext">22 / 27</div>
+            <img src="{% static 'html_css/perth.jpg' %}">
+            <div class="text">
+                <h5>Western-Pacific Deployment CVN-70</h5>
+                <p>Perth, Australia 2012</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">24 / 27</div>
-        <img src="{% static 'html_css/pikachu.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>Western-Pacific Deployment CVN-70</h5>
-            <p>Busan, South Korea 2015</p>
+        <div class="mySlides fade">
+            <div class="numbertext">23 / 27</div>
+            <img src="{% static 'html_css/perth2.jpg' %}">
+            <div class="text">
+                <h5>Western-Pacific Deployment CVN-70</h5>
+                <p>Perth, Australia 2012</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">25 / 27</div>
-        <img src="{% static 'html_css/picnik.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>Steel Beach Picnic</h5>
-            <p>Somewhere In The Arabian Gulf, 2012</p>
-            <p>When you're out to sea for a long time, sometimes the ship will have a barbeque up on the flight
-                deck like this to change pace.</p>
+        <div class="mySlides fade">
+            <div class="numbertext">24 / 27</div>
+            <img src="{% static 'html_css/pikachu.jpg' %}">
+            <div class="text">
+                <h5>Western-Pacific Deployment CVN-70</h5>
+                <p>Busan, South Korea 2015</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">26 / 27</div>
-        <img src="{% static 'html_css/prettyocean.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>Perks Of The Job</h5>
-            <p>Somewhere Around Australia, 2012</p>
-            <p>This shot was taken from the hangar bay. The shot doesn't do the memory justice.</p>
+        <div class="mySlides fade">
+            <div class="numbertext">25 / 27</div>
+            <img src="{% static 'html_css/picnik.jpg' %}">
+            <div class="text">
+                <h5>Steel Beach Picnic</h5>
+                <p>Somewhere In The Arabian Gulf, 2012</p>
+                <p>When you're out to sea for a long time, sometimes the ship will have a barbeque up on the flight
+                    deck like this to change pace.</p>
+            </div>
         </div>
-    </div>
-    <div class="mySlides fade">
-        <div class="numbertext">27 / 27</div>
-        <img src="{% static 'html_css/starwars.jpg' %}" style="width:100%">
-        <div class="text">
-            <h5>The Last Jedi Midnight Premiere</h5>
-            <p>San Diego, CA 2017</p>
-            <p>Having some fun entertaining folks with a little lightsaber fight while we wait to be let into
-                the theater.</p>
+        <div class="mySlides fade">
+            <div class="numbertext">26 / 27</div>
+            <img src="{% static 'html_css/prettyocean.jpg' %}">
+            <div class="text">
+                <h5>Perks Of The Job</h5>
+                <p>Somewhere Around Australia, 2012</p>
+                <p>This shot was taken from the hangar bay. The shot doesn't do the memory justice.</p>
+            </div>
         </div>
-    </div>
+        <div class="mySlides fade">
+            <div class="numbertext">27 / 27</div>
+            <img src="{% static 'html_css/starwars.jpg' %}">
+            <div class="text">
+                <h5>The Last Jedi Midnight Premiere</h5>
+                <p>San Diego, CA 2017</p>
+                <p>Having some fun entertaining folks with a little lightsaber fight while we wait to be let into
+                    the theater.</p>
+            </div>
+        </div>
 
-    <!-- Next and previous buttons -->
-    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        <!-- Next and previous buttons -->
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+    <!-- The dots/circles -->
+    <div style="text-align:center">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(5)"></span>
+        <span class="dot" onclick="currentSlide(10)"></span>
+        <span class="dot" onclick="currentSlide(15)"></span>
+        <span class="dot" onclick="currentSlide(20)"></span>
+        <span class="dot" onclick="currentSlide(25)"></span>
+    </div>
 </div>
 <br>
 
-<!-- The dots/circles -->
-<div style="text-align:center">
-    <span class="dot" onclick="currentSlide(1)"></span>
-    <span class="dot" onclick="currentSlide(2)"></span>
-    <span class="dot" onclick="currentSlide(3)"></span>
-</div>
 {% endblock %}
 {% block javascript %}
 <script src="{% static 'html_css/slideshow.js' %}"></script>
