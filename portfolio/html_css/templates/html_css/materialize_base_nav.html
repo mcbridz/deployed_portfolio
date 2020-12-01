@@ -39,17 +39,22 @@
 
             <ul class="dropdown-content" id="django_demos">
                 <li>
-                    <a href="#!">URL Shortener (Link Redirection)</a>
+                    <a href="{% url 'urlshort:urlshortener' %}" class="dropdown-item" target="_blank">URL
+                        Shortener (Link redirection)</a>
                 </li>
                 <li>
-                    <a href="#!">Pokedex (raw CSS Custom Mngmt Commands)</a>
+                    <a href="{% url 'pokedex_app:home' %}" class="dropdown-item" target="_blank">Pokedex (raw CSS Custom
+                        Mngmt Commands)</a>
                 </li>
                 <li>
-                    <a href="#!">Blog (login commenting)</a>
+                    <a href="{% url 'blog_app:index' %}" class="dropdown-item" target="_blank">Blog (login
+                        commenting)</a>
                 </li>
                 <li>
-                    <a href="#!">Library (Vue.JS Pagination Favoriting)</a>
+                    <a href="{% url 'library:index' %}" class="dropdown-item" target="_blank">Library (Vue.JS Pagination
+                        Favoriting)</a>
                 </li>
+
             </ul>
 
             <ul id="html_css_demos" class="dropdown-content">
@@ -144,16 +149,20 @@
 
     <ul class="dropdown-content" id="side_django_demos">
         <li>
-            <a href="#!">URL Shortener</a>
+            <a href="{% url 'urlshort:urlshortener' %}" class="dropdown-item" target="_blank">URL
+                Shortener (Link redirection)</a>
         </li>
         <li>
-            <a href="#!">Pokedex</a>
+            <a href="{% url 'pokedex_app:home' %}" class="dropdown-item" target="_blank">Pokedex (raw CSS Custom
+                Mngmt Commands)</a>
         </li>
         <li>
-            <a href="#!">Blog</a>
+            <a href="{% url 'blog_app:index' %}" class="dropdown-item" target="_blank">Blog (login
+                commenting)</a>
         </li>
         <li>
-            <a href="#!">Library</a>
+            <a href="{% url 'library:index' %}" class="dropdown-item" target="_blank">Library (Vue.JS Pagination
+                Favoriting)</a>
         </li>
     </ul>
 
