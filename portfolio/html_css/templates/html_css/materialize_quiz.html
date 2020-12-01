@@ -6,6 +6,9 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <!-- axios -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 
 <style>
     .side-nav {
@@ -89,7 +92,7 @@
 <div class="container" id="screen">
     <div id="app">
         <div v-if="!game_started">
-            <button class="btn btn-primary" v-on:click="changeGameType">Change Game Type</button>
+            <button class="waves-effect waves-light btn" v-on:click="changeGameType">Change Game Type</button>
             <div v-if="!wwtbam_sim">
                 <div class="form-group">
                     <label for="num_questions"><b>Mode: </b>Manual</label>
@@ -139,13 +142,13 @@
             <div v-if="wwtbam_sim">
                 <span><b>Who Wants To Be A Millionaire! (coming soon!)</b></span>
             </div>
-            <button class="btn btn-primary" v-on:click="startGame">Start Game</button>
+            <button class="waves-effect waves-light btn" v-on:click="startGame">Start Game</button>
         </div>
         <div id="display" v-if="game_started && !review">
             <div>
                 <ul class="nav flex-column">
                     <li class="nav-item side-nav" v-for="(question, index) in questions"
-                        v-on:click="changeQuestion(index)" v-bind:id="'side_nav' + index">
+                        v-on:click="()=>changeQuestion(index)" v-bind:id="'side_nav' + index">
                         <div>Question [[index+1]]</div>
                     </li>
                 </ul>
@@ -155,12 +158,15 @@
                     <span v-html="questions[current_question_index].question"></span>
                 </div>
                 <div class="container" id="answer_display">
-                    <div class="radio_group" v-for="(question, index) in questions[current_question_index].arr_answers">
-                        <input class="answer_radio" type="radio" :disabled="questions[current_question_index].answered"
-                            v-bind:id="'answer'+index" v-bind:value="question" v-model="selected_answer">
-                        <label class="answer_text" v-bind:for="'answer1'+index" v-html="question"></label>
-                    </div>
-                    <button class="btn btn-primary" id="button_submit" v-on:click="checkAnswer()">Submit</button>
+                    <p v-for="(question, index) in questions[current_question_index].arr_answers">
+                        <label class="radio_group">
+                            <input :name="current_question_index + 'answers'" class="answer_radio" type="radio"
+                                :disabled="questions[current_question_index].answered" v-model="selected_answer"
+                                v-bind:id="'answer'+index" v-bind:value="question" />
+                            <span class="answer_text" v-html="question"></span>
+                        </label>
+                    </p>
+                    <a class="waves-effect waves-light btn" id="button_submit" v-on:click="checkAnswer">Submit</a>
                 </div>
             </div>
             <span class="container" id="score">Score: [[score]]</span>
@@ -171,7 +177,7 @@
                 <div><b class="tab">Your Anwswer: </b><span v-html="question.selected_answer"></span></div>
                 <div><b class="tab">Correct Answer: </b><span v-html="question.answer"></span></div>
             </div>
-            <button class="btn btn-primary" v-on:click="reset">Restart</button>
+            <button class="waves-effect waves-light btn" v-on:click="reset">Restart</button>
         </div>
     </div>
 </div>
@@ -179,6 +185,12 @@
 
 {% block javascript %}
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var sel_elem = document.querySelector('#categories')
+        var sel_elem2 = document.querySelector('#trivia_difficulty')
+        var sel_instances = M.FormSelect.init(sel_elem, {})
+        var sel_instances2 = M.FormSelect.init(sel_elem2, {})
+    })
     function randChoice(arr) {
         if (arr.length != 0) {
             return arr[Math.floor(Math.random() * arr.length)]
