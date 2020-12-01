@@ -16,6 +16,7 @@
     }
 
     .row {
+        display: flex;
         justify-content: center !important;
     }
 
@@ -39,6 +40,14 @@
 
     button {
         margin-bottom: 4px;
+    }
+
+    .col-2>.row {
+        margin-bottom: 5px;
+    }
+
+    .log-item>.col-2 {
+        margin-left: 15px;
     }
 
     @media only screen and (max-width: 992px) {
@@ -105,13 +114,13 @@
                 <div class="row">
                     Plain Text
                 </div>
-                <textarea class="row log-text">[[item.pt]]</textarea>
+                <textarea cols="50" rows="5" class="row log-text">[[item.pt]]</textarea>
             </div>
             <div class="col-5">
                 <div class="row">
                     Cypher Text
                 </div>
-                <textarea class="row log-text">[[item.ct]]</textarea>
+                <textarea cols="50" rows="5" class="row log-text">[[item.ct]]</textarea>
             </div>
             <div class="col-2">
                 <div class="row">Rotation:</div>

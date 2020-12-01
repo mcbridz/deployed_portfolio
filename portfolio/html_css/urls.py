@@ -30,4 +30,6 @@ urlpatterns = [
     path('materialize/todo_list/', views.materialize_todo_list,
          name='materialize_todo_list'),
     path('materialize/rotN/', views.materialize_rotN, name='materialize_rotN'),
+    path('materialize/weather/', views.materialize_weather,
+         name='materialize_weather'),
 ]

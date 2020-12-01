@@ -76,3 +76,7 @@ def materialize_todo_list(request):
 
 def materialize_rotN(request):
     return render(request, 'html_css/materialize_rotN.html')
+
+
+def materialize_weather(request):
+    return render(request, 'html_css/materialize_weather.html')
