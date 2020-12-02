@@ -18,6 +18,7 @@ def welcome(request):
 
 
 def index(request):
+    django.contrib.auth.logout(request)
     return HttpResponseRedirect(reverse('blog_app:login'))
 
 
@@ -178,6 +179,7 @@ def profile(request):
 def register(request):
     print('GET' + str(request.GET))
     if request.method == 'POST':
+        django.contrib.auth.logout(request)
         print(request.POST)
         secret_key = settings.RECAPTCHA_SECRET_KEY
         data = {
@@ -203,10 +205,13 @@ def register(request):
             return render(request, 'blog/registration.html', context)
         username = request.POST['username']
         if User.objects.filter(username=username).exists():
-            context = {
-                'site_key': settings.RECAPTCHA_SITE_KEY
-            }
-            return render(request, 'blog/registration.html', context)
+            user.first_name = request.POST['first_name']
+            user.last_name = request.POST['last_name']
+            user.save()
+            django.contrib.auth.login(request, user)
+            new_profile = UserProfile(login_name=user)
+            new_profile.save()
+            return HttpResponseRedirect(reverse('blog_app:profile'))
         user = User.objects.create_user(
             username, request.POST['email'], password)
         user.first_name = request.POST['first_name']
@@ -220,6 +225,22 @@ def register(request):
         'site_key': settings.RECAPTCHA_SITE_KEY
     }
     return render(request, 'blog/registration.html', context)
+
+
+@login_required
+def del_account(request):
+    user = request.user
+    profile = user.profile_ref
+    django.contrib.auth.logout(request)
+    if BlogPost.objects.filter(user=profile).exists():
+        posts = profile.posts.all()
+        posts.delete()
+    profile.delete()
+    try:
+        user.delete()
+    except:
+        return HttpResponseRedirect(reverse('mirmir:profile'))
+    return HttpResponseRedirect(reverse('blog_app:index'))
 
 
 def login(request):

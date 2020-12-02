@@ -429,6 +429,7 @@ def verified_account(user):
 
 
 def index(request):
+    django.contrib.auth.logout(request)
     context = {
         'message': 'Hello, world!',
     }
@@ -706,18 +707,36 @@ def register(request):
             }
             return render(request, 'mirmir_app/register.html', context)
         if result_json['score'] > 0.5:
+            django.contrib.auth.logout(request)
             ################################################
             # user login logic here
             username = request.POST['username']
             if User.objects.filter(username=username).exists():
-                form = ContactForm()
-                context = {
-                    'form': form,
-                    'site_key': settings.RECAPTCHA_SITE_KEY,
-                    'is_there_a_message': True,
-                    'message': 'Username already exists, please choose another username.',
-                }
-                return render(request, 'mirmir_app/register.html', context)
+                data = request.POST
+                new_contact = Contact(
+                    username=user,
+                    first_name=data['first_name'],
+                    last_name=data['last_name'],
+                    company=data['company'],
+                    city=data['city'],
+                    state_code=data['state_code'],
+                    zip_code=data['zip_code'],
+                    main_phone=data['main_phone'],
+                    email=data['email'],
+                    birthday=data['birthday']
+                )
+                new_contact.save()
+                email_confirmation = EmailConfirmation(
+                    contact=new_contact, code=random_code(10))
+                email_confirmation.save()
+                body = render_to_string('mirmir_app/email.html', {
+                                        'code': email_confirmation.code, 'domain': 'http://' + request.META['HTTP_HOST']})
+                send_mail('Confirm Your Account', '', settings.EMAIL_HOST_USER, [
+                    new_contact.email], fail_silently=False, html_message=body)
+                django.contrib.auth.login(request, user)
+                # django.contrib.auth.login(request, user)
+                next = request.GET.get('next', reverse('mirmir_app:profile'))
+                return HttpResponseRedirect(next)
             password = request.POST['password']
             password_v = request.POST['password_v']
             if password != password_v:
@@ -761,6 +780,18 @@ def register(request):
                 'message': 'reCAPTCHA v3 suspect, please try again.'
             }
             return render(request, 'mirmir_app/register.html', context)
+
+
+@login_required
+def del_account(request):
+    user = request.user
+    contact = user.profile
+    if Order.objects.filter(contact=contact).exists():
+        orders = contact.orders.all()
+        order_itm_qties = []
+        for order in orders:
+            order_itm_qties.append(
+                OrderItemQuantity.objects.filter(order=order))
 
 
 @login_required
