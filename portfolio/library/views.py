@@ -6,22 +6,22 @@ from django.shortcuts import get_object_or_404
 
 
 def search(request):
-    print(request.GET)
+    # print(request.GET)
     parameter = request.GET['parameter']
-    # print(parameter)
+    print(parameter)
     search_text = request.GET['text']
     page = request.GET['page']
     if parameter not in ['title', 'author', 'year', 'country', 'language', ]:
         return HttpResponse('Invalid Parameter')
     # book_response = Book.objects.filter(author__icontains=author)
-    print('search_text: ' + search_text)
+    # print('search_text: ' + search_text)
     if search_text == '':
-        print('Empty search string')
+        # print('Empty search string')
         book_response = Book.objects.all().order_by('-year')
     else:
         book_response = Book.objects.filter(
             **{parameter+'__icontains': search_text}).order_by('-year')
-    print(book_response)
+    # print(book_response)
     books_per_page = 5
     paginator = Paginator(book_response, books_per_page)
     page_display = paginator.page(page)
@@ -31,7 +31,7 @@ def search(request):
     forward_possible = True
     if int(page) + 1 > paginator.num_pages:
         forward_possible = False
-    # print(book_response)
+    print(book_response)
     books = {'books': []}
     for book in page_display:
         books['books'].append({
@@ -58,7 +58,7 @@ def search(request):
 
 
 def change_favorite(request):
-    print(request)
+    # print(request)
     book = get_object_or_404(Book, id=request.GET['book_id'])
     if book.favorited:
         book.favorited = False
@@ -69,7 +69,7 @@ def change_favorite(request):
 
 
 def library(request):
-    print('library method started')
+    # print('library method started')
     library_data = Book.objects.all().order_by('-year')
     library = []
     books_per_page = 5

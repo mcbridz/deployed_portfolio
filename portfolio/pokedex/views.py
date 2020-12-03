@@ -7,13 +7,13 @@ import random
 
 
 def home(request):
-    print(request)
+    # print(request)
     poketypes = PokemonType.objects.all().order_by('name')
     pokemons = Pokemon.objects.all().order_by('number')
     search_string = ''
     search_type = ''
     page_number = request.GET.get('page', 1)
-    print(f'Loading page: {page_number}')
+    # print(f'Loading page: {page_number}')
     pokemon_per_page = 1
     paginator = Paginator(pokemons, pokemon_per_page)
     message = ''
@@ -22,9 +22,9 @@ def home(request):
         if search_type == 'name':
             search_string = request.GET['search_string']
             pokemons = pokemons.filter(name__icontains=search_string).exists()
-            print('*************************')
-            print(pokemons)
-            print('*************************')
+            # print('*************************')
+            # print(pokemons)
+            # print('*************************')
             if not pokemons:
                 message = "No pokemon matching " + request.GET['search_string']
                 pokemons = Pokemon.objects.all().order_by('number')
@@ -60,5 +60,5 @@ def home(request):
         'search_string': search_string,
         'message': message,
     }
-    print(context)
+    # print(context)
     return render(request, 'pokedex_app/home.html', context)

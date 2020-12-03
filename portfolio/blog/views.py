@@ -26,9 +26,9 @@ def home(request):
     feed_data = BlogPost.objects.all().order_by('-date_created')
     feed = []
     for post in feed_data:
-        # print('***********************************************')
-        # print(post.user.profile_picture == '')
-        # print('***********************************************')
+        print('***********************************************')
+        print(post.user.profile_picture == '')
+        print('***********************************************')
         feed.append({
             'id': post.id,
             'post_text': post.body,
@@ -115,7 +115,7 @@ def delete_post(request, post_id):
 @login_required
 def save_post(request):
     blog_data = request.POST
-    # print(blog_data)
+    print(blog_data)
     title = blog_data['title']
     body = blog_data['body']
     blog_post = BlogPost(title=title, body=body, user=request.user.profile_ref)
@@ -123,17 +123,17 @@ def save_post(request):
         image = request.FILES['image']
         blog_post.image = image
     blog_post.save()
-    print(blog_post.id)
+    # print(blog_post.id)
     return HttpResponseRedirect(reverse('blog_app:post_detail', args=[blog_post.id]))
 
 
 @login_required
 def comment_post(request, post_id):
-    print(request.POST)
+    # print(request.POST)
     content = request.POST['comment']
     blog_post = get_object_or_404(BlogPost, pk=post_id)
     new_comment = Comment(content=content, blog_post=blog_post)
-    print(new_comment)
+    # print(new_comment)
     new_comment.save()
     return HttpResponseRedirect(reverse('blog_app:post_view', args=[post_id]))
 
@@ -156,13 +156,13 @@ def comment_detail(request, comment_id):
 def profile(request):
     posts = BlogPost.objects.filter(
         user=request.user.profile_ref).order_by('-date_created')
-    print(posts)
+    # print(posts)
     context = {
         'user': request.user,
         'posts': posts,
     }
     if request.method == 'POST':
-        print(request.POST)
+        # print(request.POST)
         user = request.user
         image = request.FILES['profile_picture']
         data = request.POST
@@ -192,7 +192,7 @@ def reset_password(request):
         resp = requests.post(
             'https://www.google.com/recaptcha/api/siteverify', data=data)
         result_json = resp.json()
-        print(result_json)
+        # print(result_json)
         # create user logic here
         if not result_json['success'] or result_json['score'] <= 0.5:
             context = {
@@ -213,10 +213,10 @@ def reset_password(request):
 
 
 def register(request):
-    print('GET' + str(request.GET))
+    # print('GET' + str(request.GET))
     if request.method == 'POST':
         django.contrib.auth.logout(request)
-        print(request.POST)
+        # print(request.POST)
         secret_key = settings.RECAPTCHA_SECRET_KEY
         data = {
             'response': request.POST['g-recaptcha-response'],
@@ -225,7 +225,7 @@ def register(request):
         resp = requests.post(
             'https://www.google.com/recaptcha/api/siteverify', data=data)
         result_json = resp.json()
-        print(result_json)
+        # print(result_json)
         # create user logic here
         if not result_json['success'] or result_json['score'] <= 0.5:
             context = {
@@ -282,8 +282,8 @@ def del_account(request):
 
 
 def login(request):
-    print(request.POST)
-    print(request.GET)
+    # print(request.POST)
+    # print(request.GET)
     if request.method == 'POST':
         secret_key = settings.RECAPTCHA_SECRET_KEY
         data = {
@@ -293,7 +293,7 @@ def login(request):
         resp = requests.post(
             'https://www.google.com/recaptcha/api/siteverify', data=data)
         result_json = resp.json()
-        print(result_json)
+        # print(result_json)
         ################################################
         if not result_json['success'] or result_json['score'] <= 0.5:
             context = {

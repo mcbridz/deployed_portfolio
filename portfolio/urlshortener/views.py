@@ -48,7 +48,7 @@ def urlshortener(request):
 
 def edit(request):
     urls = ShortenedURL.objects.all()
-    print(urls)
+    # print(urls)
     context = {
         'title': 'Edit Saved URLs',
         'urls': urls,
@@ -57,7 +57,7 @@ def edit(request):
 
 
 def save(request):
-    # print(request.POST)
+    print(request.POST)
     response = requests.get(request.POST['input_url'])
     if response.status_code == 404:
         print('URL invalid')
@@ -83,6 +83,6 @@ def redirect(request, code):
 
 def delete(request, id):
     url_object = ShortenedURL.objects.get(pk=id)
-    print(url_object)
+    # print(url_object)
     url_object.delete()
     return HttpResponseRedirect(reverse('urlshort:edit'))

@@ -33,7 +33,7 @@ def employee_check(user):
 @user_passes_test(employee_check)
 def send_email(request):
     data = json.loads(request.body)
-    print(data)
+    # print(data)
     status_id = data['email_select_by_status']
     contacts = Contact.objects.filter(status=status_id)
     email_addresses = []
@@ -50,7 +50,7 @@ def send_email(request):
 @user_passes_test(employee_check)
 def send_customer_email(request):
     data = json.loads(request.body)
-    print(data)
+    # print(data)
     email_address = data['email_address']
     email_text = data['email_text']
     body = render_to_string(
@@ -63,7 +63,7 @@ def send_customer_email(request):
 @user_passes_test(employee_check)
 def save_photo(request):
     data = request.POST
-    print(data)
+    # print(data)
     product = Product.objects.get(id=request.POST['product_id'])
     new_num = product.product_photos.count() + 1
     new_photo = ProductPhoto(
@@ -79,9 +79,9 @@ def save_product_changes(request):
     photo_remove_instructions = json.loads(
         request.body)['photo_remove_instructions']
     if type_of_update == 'update':
-        # print(product_update)
+        print(product_update)
         product = Product.objects.get(id=product_update['id'])
-        print(product)
+        # print(product)
         product.title = product_update['title']
         product.subtitle = product_update['subtitle']
         product.action_message = product_update['action_message']
@@ -114,7 +114,7 @@ def save_product_changes(request):
         return HttpResponse(product_update['id'])
 
     elif type_of_update == 'new':
-        print(product_update)
+        # print(product_update)
         # bottling_date = re.split('/', product_update['bottling_date'])
         # final_bottling_date = bottling_date[2] + '-' + \
         #     bottling_date[0] + '-' + bottling_date[1]
@@ -177,13 +177,13 @@ def get_next_order_number_employee(request):
 
 @user_passes_test(employee_check)
 def save_order_changes(request):
-    # print(request.body)
+    print(request.body)
     order_update = json.loads(request.body)['order']
     type_of_update = json.loads(request.body)['type']
-    print(order_update)
+    # print(order_update)
     # order object update
     if type_of_update == 'update':
-        print(order_update['order_number'])
+        # print(order_update['order_number'])
         order = Order.objects.get(order_number=order_update['order_number'])
         order.order_type = OrderType.objects.get(id=order_update['order_type'])
         order.shipping_status = ShippingStatus.objects.get(
@@ -266,7 +266,7 @@ def get_open_orders(request):
 
 @user_passes_test(employee_check)
 def employee_main(request):
-    print(request)
+    # print(request)
     context = {
         'open_orders': Order.get_open_orders(),
         'shipping_statuses': ShippingStatus.get_shipping_statuses(),
@@ -281,7 +281,7 @@ def employee_main(request):
 
 @user_passes_test(employee_check)
 def main_page_management(request):
-    print(request)
+    # print(request)
     context = {
 
     }
@@ -328,8 +328,8 @@ def get_next_order_number(group):
 
 @user_passes_test(employee_check)
 def add_new_slide(request):
-    print(request.POST)
-    print(request.FILES)
+    # print(request.POST)
+    # print(request.FILES)
     slides = CarouselSlide.objects.all()
     new_order_num = get_next_order_number(slides)
     slide_data = request.POST
@@ -347,13 +347,13 @@ def add_new_slide(request):
 
 @user_passes_test(employee_check)
 def save_slide(request):
-    print(request.POST)
-    print(request.FILES)
+    # print(request.POST)
+    # print(request.FILES)
     slide_text_data = request.POST['slide_data']
-    print(slide_text_data)
+    # print(slide_text_data)
     slide_text_data = json.loads(slide_text_data)
     tmp_id = slide_text_data['id']
-    print(tmp_id)
+    # print(tmp_id)
     slide = CarouselSlide.objects.get(id=tmp_id)
     slide.caption_title = slide_text_data['caption_title']
     slide.caption = slide_text_data['caption']
@@ -368,8 +368,8 @@ def save_slide(request):
 
 @user_passes_test(employee_check)
 def save_highlight(request):
-    print(request.POST)
-    print(request.FILES)
+    # print(request.POST)
+    # print(request.FILES)
     highlight_text_data = json.loads(request.POST['highlight_data'])
     tmp_id = highlight_text_data['id']
     highlight = MainPageHighlight.objects.get(id=tmp_id)
@@ -384,8 +384,8 @@ def save_highlight(request):
 
 @user_passes_test(employee_check)
 def save_warning(request):
-    print(request)
-    print(request.body)
+    # print(request)
+    # print(request.body)
     warning_data = json.loads(request.body)
     warning = MainPageWarning.objects.get(id=1)
     warning.text = warning_data['text']
@@ -397,7 +397,7 @@ def save_warning(request):
 @user_passes_test(employee_check)
 def execute_delete(request):
     data = json.loads(request.body)
-    print(data)
+    # print(data)
     # if/else for slide or highlight, include JSON response of updated object list
     if data['type'] == 'slide':
         slide = CarouselSlide.objects.get(id=data['id'])
@@ -413,7 +413,7 @@ def execute_delete(request):
 @user_passes_test(employee_check)
 def save_new_highlight(request):
     data = request.POST
-    print(data)
+    # print(data)
     text = data['text']
     new_highlight = MainPageHighlight(text=text, image=request.FILES['image'])
     new_highlight.save()
@@ -437,11 +437,11 @@ def index(request):
 
 
 def main(request):
-    print(request.user)
+    # print(request.user)
     if request.user.username == 'admin':
         return HttpResponseRedirect(reverse('mirmir_app:logout'))
     if request.user.is_authenticated:
-        print(request.user.profile.status)
+        # print(request.user.profile.status)
         if request.user.profile.status.status == 'employee':
             return HttpResponseRedirect(reverse('mirmir_app:employee_main'))
     meads = Product.objects.filter(is_display_on_website=True)
@@ -472,13 +472,13 @@ def club(request):
         if request.user.is_authenticated:
             context['is_club_member'] = (
                 request.user.profile.status.status == 'club_member')
-        print(context)
+        # print(context)
         return render(request, 'mirmir_app/club.html', context)
     else:
         if not request.user.is_authenticated:
             return HttpResponseRedirect(reverse('mirmir_app:login'))
         profile = request.user.profile
-        print(request.POST)
+        # print(request.POST)
         if 'opt_in' in request.POST:
             profile.status = StatusField.objects.get(status='club_member')
         else:
@@ -506,7 +506,7 @@ def email_sent(request):
 @login_required
 def send_new_code(request):
     # verification = request.user.profile.email_confirmations.objects.all()
-    # print(verification)
+    print(verification)
     # if verification is not None:
     #     verification.delete()
     email_confirmation = EmailConfirmation(
@@ -525,7 +525,7 @@ def confirm(request):
     if code == '':
         return render(request, 'mirmir_app/profile.html', {})
     email_confirmation = EmailConfirmation.objects.get(code=code)
-    print(email_confirmation)
+    # print(email_confirmation)
     if email_confirmation is not None:
         email_confirmation.date_confirmed = timezone.now()
         email_confirmation.save()
@@ -556,7 +556,7 @@ def reset_password_request(request):
         }
         return render(request, 'mirmir_app/reset_password_request.html', context)
     else:
-        print(request.POST)
+        # print(request.POST)
         secret_key = settings.RECAPTCHA_SECRET_KEY
         data = {
             'response': request.POST['g-recaptcha-response'],
@@ -565,7 +565,7 @@ def reset_password_request(request):
         resp = requests.post(
             'https://www.google.com/recaptcha/api/siteverify', data=data)
         result_json = resp.json()
-        print(result_json)
+        # print(result_json)
         if not result_json['success']:
             context = {
                 'site_key': settings.RECAPTCHA_SITE_KEY,
@@ -611,7 +611,7 @@ def change_password(request):
         if code == '':
             return render(request, 'mirmir_app/profile.html', {})
         email_confirmation = EmailConfirmation.objects.get(code=code)
-        print(email_confirmation)
+        # print(email_confirmation)
         if email_confirmation is not None:
             email_confirmation.date_confirmed = timezone.now()
             email_confirmation.save()
@@ -624,7 +624,7 @@ def change_password(request):
         else:
             return HttpResponseRedirect(reverse('mirmir_app:reset_password_request'))
     else:
-        print(request.POST)
+        # print(request.POST)
         secret_key = settings.RECAPTCHA_SECRET_KEY
         data = {
             'response': request.POST['g-recaptcha-response'],
@@ -633,7 +633,7 @@ def change_password(request):
         resp = requests.post(
             'https://www.google.com/recaptcha/api/siteverify', data=data)
         result_json = resp.json()
-        print(result_json)
+        # print(result_json)
         ################################################
         # need captcha logic
         code = request.POST['code']
@@ -687,7 +687,7 @@ def register(request):
         }
         return render(request, 'mirmir_app/register.html', context)
     else:
-        print(request.POST)
+        # print(request.POST)
         secret_key = settings.RECAPTCHA_SECRET_KEY
         data = {
             'response': request.POST['g-recaptcha-response'],
@@ -696,7 +696,7 @@ def register(request):
         resp = requests.post(
             'https://www.google.com/recaptcha/api/siteverify', data=data)
         result_json = resp.json()
-        print(result_json)
+        # print(result_json)
         ################################################
         # need captcha logic
         if not result_json['success']:
@@ -714,7 +714,7 @@ def register(request):
             if User.objects.filter(username=username).exists():
                 user = django.contrib.auth.authenticate(
                     request, username=username, password=request.POST['password'])
-                print(user.username)
+                # print(user.username)
                 if user is None:
                     form = ContactForm()
                     context = {
@@ -842,7 +842,7 @@ def login(request):
         resp = requests.post(
             'https://www.google.com/recaptcha/api/siteverify', data=data)
         result_json = resp.json()
-        print(result_json)
+        # print(result_json)
         ################################################
         # captcha logic
         if not result_json['success']:
@@ -859,7 +859,7 @@ def login(request):
         password = request.POST['password']
         user = django.contrib.auth.authenticate(
             request, username=username, password=password)
-        # print(user.profile.status)
+        print(user.profile.status)
         if user is None:
             context = {
                 'site_key': settings.RECAPTCHA_SITE_KEY,
@@ -905,7 +905,7 @@ def confirm_login(request):
         }
         return render(request, 'mirmir_app/login.html', context)
     email_confirmation = EmailConfirmation.objects.get(code=code)
-    # print(email_confirmation)
+    print(email_confirmation)
     if email_confirmation is not None:
         email_confirmation.date_confirmed = timezone.now()
         email_confirmation.save()
@@ -947,16 +947,16 @@ def profile(request):
                            instance=request.user.profile)
         if form.is_valid():
             form.save()
-        print(request.POST)
+        # print(request.POST)
         profile = request.user.profile
         if 'opt_in' in request.POST:
-            print('found opt-in')
+            # print('found opt-in')
             profile.status = StatusField.objects.get(
                 status='subscriber')
         else:
-            print('no opt-in')
+            # print('no opt-in')
             if profile.status.status == 'subscriber':
-                print('user is subscriber')
+                # print('user is subscriber')
                 profile.status = StatusField.objects.get(
                     status='purchaser')
         profile.save()
@@ -981,7 +981,7 @@ def order_details(request, order_num):
 @login_required
 def shop(request):
     products = Product.objects.filter(is_display_on_website=True)
-    print(products)
+    # print(products)
     context = {
         'products': products
     }
@@ -1030,7 +1030,7 @@ def checkout(request):
 @user_passes_test(verified_account)
 def get_user_data_for_checkout(request):
     user = request.user.profile
-    print('company ' + user.company)
+    # print('company ' + user.company)
     output = {
         'billing': {
             'first_name': user.first_name,
@@ -1057,15 +1057,15 @@ def cart_verification(request):
 @user_passes_test(verified_account)
 def upsert_order(request):
     data = json.loads(request.body)
-    print(data)
+    # print(data)
     # big make for Order
     billing = data['order']['billing']
     shipping = data['order']['shipping']
-    # print(billing)
+    print(billing)
     birthday = billing['birthday']
     birthday = re.split('/', birthday)
     final_birthday = birthday[2] + '-' + birthday[0] + '-' + birthday[1]
-    # print(final_birthday)
+    print(final_birthday)
     ###########################################
     #          get Contact logic here         #
     ###########################################
@@ -1116,15 +1116,15 @@ def upsert_order(request):
     if request.user.is_authenticated:
         contact = request.user.profile
         order.contact = contact
-    print('order_shipping_company: ' + order.shipping_company)
-    print('order_billing_company' + order.billing_company)
+    # print('order_shipping_company: ' + order.shipping_company)
+    # print('order_billing_company' + order.billing_company)
     order.save()
     # make OrderItemQuantity's for each product
     num_items = 0
     cart = data['cart']
-    print('Items in cart:')
+    # print('Items in cart:')
     for item in cart:
-        print(item['title'])
+        # print(item['title'])
         product = Product.objects.get(id=item['id'])
         quantity = int(item['num'])
         num_items += quantity
@@ -1136,9 +1136,9 @@ def upsert_order(request):
         product.SKU_Prices_Inventory_current_inventory -= quantity
         product.save()
         new_item_quantity.save()
-        print('Product Quantity: ' + str(quantity))
-        print('Product Price: ' + str(product.SKU_Prices_price))
-        print('Current sub total: ' + str(order.sub_total))
+        # print('Product Quantity: ' + str(quantity))
+        # print('Product Price: ' + str(product.SKU_Prices_price))
+        # print('Current sub total: ' + str(order.sub_total))
     order.total = order.sub_total * \
         (1 + (order.tax / 100)) + order.shipping + order.handling
     order.save()
@@ -1162,7 +1162,7 @@ def upsert_order(request):
         'mirmir_app/email_receipt.html', {'order': email_order, 'num_items': num_items})
     send_mail('Order Receipt ' + str(order.order_number), '', settings.EMAIL_HOST_USER,
               [order.billing_email], fail_silently=False, html_message=body)
-    print('Order total: ' + str(order.total))
+    # print('Order total: ' + str(order.total))
     return HttpResponse('Order Complete')
 
 
