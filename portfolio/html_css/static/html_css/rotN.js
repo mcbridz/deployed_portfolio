@@ -39,7 +39,7 @@ let app = new Vue({
             for (let i = 0; i < input_text.length; ++i) {
                 let char_tmp = input_text[i]
                 let shifted_index = encoding_wheel.indexOf(char_tmp)
-                console.log("char_tmp", char_tmp, "shifted_index", shifted_index, "encoding wheel L", encoding_wheel.length)
+                // console.log("char_tmp", char_tmp, "shifted_index", shifted_index, "encoding wheel L", encoding_wheel.length)
                 if (shifted_index != -1) {
                     shifted_index = (shifted_index + this.rotation)
                     shifted_index = get_good_index(shifted_index, encoding_wheel)
@@ -57,7 +57,7 @@ let app = new Vue({
             for (let i = 0; i < input_text.length; ++i) {
                 let char_tmp = input_text[i]
                 let shifted_index = encoding_wheel.indexOf(char_tmp)
-                console.log("char_tmp", char_tmp, "shifted_index", shifted_index, "encoding wheel L", encoding_wheel.length)
+                // console.log("char_tmp", char_tmp, "shifted_index", shifted_index, "encoding wheel L", encoding_wheel.length)
                 if (shifted_index != -1) {
                     shifted_index = shifted_index - this.rotation
                     shifted_index = get_good_index(shifted_index, encoding_wheel)

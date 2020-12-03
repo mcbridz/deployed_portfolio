@@ -3,7 +3,7 @@ let phrase_but = document.querySelector("#gen_but")
 let output_div = document.querySelector("#output_div")
 
 //checking for code run
-console.log(phrase_but)
+// console.log(phrase_but)
 
 let ones_not_teens = {
     0: "",
@@ -120,7 +120,7 @@ function hundreds_translate(input_num, triplets) {
 }
 
 function break_and_translate(input_num) {
-    console.log(input_num)
+    // console.log(input_num)
     if (input_num == 0) {
         return ""
     }
@@ -145,8 +145,8 @@ function break_and_translate(input_num) {
 
 phrase_but.onclick = function () {
     let input_num = num_raw.value
-    console.log(input_num)
+    // console.log(input_num)
     let output_str = break_and_translate(input_num)
-    console.log(output_str)
+    // console.log(output_str)
     output_div.innerText = output_str
 }

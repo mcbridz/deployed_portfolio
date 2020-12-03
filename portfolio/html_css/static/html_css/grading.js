@@ -51,7 +51,7 @@ grade.onclick = function () {
         else if (tmp_grade % 10 > 5) {
             modifier = "+"
         }
-        console.log(tmp_grade)
+        // console.log(tmp_grade)
         if (tmp_grade < 100) {
             fld.innerHTML += `<div class= "col-1">${grades[parseInt(tmp_grade / 10)].toString()}${modifier}</div><div class= "col-3"></div>`
             // console.log(fld.innerHTML)

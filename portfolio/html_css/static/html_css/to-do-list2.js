@@ -26,9 +26,9 @@ $("#input_todo").keypress(function (key) {
         row.append(right_side)
         $("#todolist").append(row)
         left_side.mousedown(function (event) {
-            console.log("left_side.css('text-decoration')= " + left_side.css("text-decoration"))
+            // console.log("left_side.css('text-decoration')= " + left_side.css("text-decoration"))
             if (left_side.css("text-decoration").includes("line-through")) {
-                console.log("trigger remove")
+                // console.log("trigger remove")
                 row.remove()
             } else {
                 left_side.css({ "text-decoration": "line-through", "color": "rgb(50, 50, 50)" })
@@ -61,9 +61,9 @@ $("#scribe").click(function () {
     row.append(right_side)
     $("#todolist").append(row)
     left_side.mousedown(function (event) {
-        console.log("left_side.css('text-decoration')= " + left_side.css("text-decoration"))
+        // console.log("left_side.css('text-decoration')= " + left_side.css("text-decoration"))
         if (left_side.css("text-decoration").includes("line-through")) {
-            console.log("trigger remove")
+            // console.log("trigger remove")
             row.remove()
         } else {
             left_side.css({ "text-decoration": "line-through", "color": "rgb(50, 50, 50)" })
