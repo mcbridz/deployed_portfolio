@@ -712,6 +712,18 @@ def register(request):
             # user login logic here
             username = request.POST['username']
             if User.objects.filter(username=username).exists():
+                user = django.contrib.auth.authenticate(
+                    request, username=username, password=request.POST['password'])
+                print(user.username)
+                if user is None:
+                    form = ContactForm()
+                    context = {
+                        'form': form,
+                        'site_key': settings.RECAPTCHA_SITE_KEY,
+                        'there_is_a_message': True,
+                        'message': 'Username already exists with a different password, if you are sure this is your account, use password used for other applications on this site.'
+                    }
+                    return render(request, 'mirmir_app/register.html', context)
                 data = request.POST
                 new_contact = Contact(
                     username=user,
@@ -786,12 +798,26 @@ def register(request):
 def del_account(request):
     user = request.user
     contact = user.profile
-    if Order.objects.filter(contact=contact).exists():
-        orders = contact.orders.all()
-        order_itm_qties = []
-        for order in orders:
-            order_itm_qties.append(
-                OrderItemQuantity.objects.filter(order=order))
+    django.contrib.auth.logout(request)
+    if user.username == 'demo' or user.username == 'employee':
+        return HttpResponseRedirect(reverse('mirmir_app:index'))
+    if EmailConfirmation.objects.filter(contact=contact).exists():
+        confirmations = contact.email_confirmations.all()
+        confirmations.delete()
+        if Order.objects.filter(contact=contact).exists():
+            orders = contact.orders.all()
+            for order in orders:
+                order_quantities = OrderItemQuantity.objects.filter(
+                    order=order)
+                order_quantities.delete()
+            orders.delete()
+    contact.delete()
+    try:
+        user.delete()
+    except:
+        django.contrib.auth.login(request, user)
+        return HttpResponseRedirect(reverse('blog_app:index'))
+    return HttpResponseRedirect(reverse('mirmir_app:index'))
 
 
 @login_required
@@ -841,6 +867,8 @@ def login(request):
                 'message': 'Incorrect username or password, please try again or reset your password.'
             }
             return render(request, 'mirmir_app/login.html', context)
+        elif not Contact.objects.filter(username=user).exists():
+            return HttpResponseRedirect(reverse('mirmir_app:register'))
         elif user.profile.status.status == 'employee':
             context = {
 
@@ -859,14 +887,6 @@ def login(request):
                     'there_is_a_message': True,
                     'message': 'Are you a robot? Please check your registered email for link.'
                 }
-                email_address = [user.profile.email]
-                email_confirmation = EmailConfirmation(
-                    contact=user.profile, code=random_code(10))
-                email_confirmation.save()
-                body = render_to_string('mirmir_app/two_fa.html', {
-                    'code': email_confirmation.code, 'domain': 'http://' + request.META['HTTP_HOST']})
-                send_mail('Confirm Your Account', '', settings.EMAIL_HOST_USER,
-                          email_address, fail_silently=False, html_message=body)
                 return render(request, 'mirmir_app/login.html', context)
             #########################################
             # All tests passed, login user and go on

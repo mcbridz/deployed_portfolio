@@ -205,9 +205,10 @@ def register(request):
             return render(request, 'blog/registration.html', context)
         username = request.POST['username']
         if User.objects.filter(username=username).exists():
-            user.first_name = request.POST['first_name']
-            user.last_name = request.POST['last_name']
-            user.save()
+            user = django.contrib.auth.authenticate(
+                request, username=username, password=password)
+            if user is None:
+                return HttpResponseRedirect(reverse('blog_app:login'))
             django.contrib.auth.login(request, user)
             new_profile = UserProfile(login_name=user)
             new_profile.save()
@@ -239,7 +240,8 @@ def del_account(request):
     try:
         user.delete()
     except:
-        return HttpResponseRedirect(reverse('mirmir:profile'))
+        django.contrib.auth.login(request, user)
+        return HttpResponseRedirect(reverse('mirmir_app:profile'))
     return HttpResponseRedirect(reverse('blog_app:index'))
 
 
@@ -268,12 +270,12 @@ def login(request):
         password = request.POST['password']
         user = django.contrib.auth.authenticate(
             request, username=username, password=password)
-        if user is None:
-            message = 'not_found'
-        else:
+        if UserProfile.objects.filter(login_name=user).exists():
             django.contrib.auth.login(request, user)
             next = request.GET.get('next', reverse('blog_app:home'))
             return HttpResponseRedirect(next)
+        else:
+            return HttpResponseRedirect(reverse('blog_app:login'))
     context = {
         'site_key': settings.RECAPTCHA_SITE_KEY
     }
