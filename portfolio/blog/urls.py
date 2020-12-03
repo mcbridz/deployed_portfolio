@@ -18,4 +18,5 @@ urlpatterns = [
     path('comment_detail/<int:comment_id>',
          views.comment_detail, name='comment_detail'),
     path('delete_account/', views.del_account, name='del_account'),
+    path('reset_password/', views.reset_password, name='reset_password'),
 ]

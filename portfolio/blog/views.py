@@ -176,6 +176,42 @@ def profile(request):
     return render(request, 'blog/profile.html', context)
 
 
+@login_required
+def reset_password(request):
+    if request.method == 'GET':
+        context = {
+            'site_key': settings.RECAPTCHA_SITE_KEY
+        }
+        return render(request, 'blog/reset_password.html', context)
+    else:
+        secret_key = settings.RECAPTCHA_SECRET_KEY
+        data = {
+            'response': request.POST['g-recaptcha-response'],
+            'secret': secret_key,
+        }
+        resp = requests.post(
+            'https://www.google.com/recaptcha/api/siteverify', data=data)
+        result_json = resp.json()
+        print(result_json)
+        # create user logic here
+        if not result_json['success'] or result_json['score'] <= 0.5:
+            context = {
+                'site_key': settings.RECAPTCHA_SITE_KEY
+            }
+            return render(request, 'blog/reset_password.html', context)
+        password = request.POST['password']
+        password_v = request.POST['password_v']
+        if password != password_v:
+            context = {
+                'site_key': settings.RECAPTCHA_SITE_KEY
+            }
+            return render(request, 'blog/reset_password.html', context)
+        user = request.user
+        user.set_password(password)
+        user.save()
+        return HttpResponseRedirect('blog_app:profile')
+
+
 def register(request):
     print('GET' + str(request.GET))
     if request.method == 'POST':

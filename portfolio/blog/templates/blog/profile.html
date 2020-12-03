@@ -20,7 +20,7 @@
     <input type="file" name="profile_picture" accept="image/*">
     <button class="btn btn-primary" type="submit">Update</button>
     <button type="button" data-toggle="modal" data-target="#confirm" class="btn btn-danger">Delete Account</button>
-    <a href="#!" class="btn btn-secondary">Reset Password</a>
+    <a href="{% url 'blog_app:reset_password' %}" class="btn btn-secondary">Reset Password</a>
 </form>
 <div class="modal fade" id="confirm" tabindex="-1" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
