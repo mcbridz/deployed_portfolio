@@ -34,4 +34,5 @@ urlpatterns = [
     path('materialize/weather/', views.materialize_weather,
          name='materialize_weather'),
     path('materialize/quiz/', views.materialize_quiz, name='materialize_quiz'),
+    #     path('error_handling/', views.handler, name='handler'),
 ]

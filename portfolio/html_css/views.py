@@ -84,3 +84,22 @@ def materialize_weather(request):
 
 def materialize_quiz(request):
     return render(request, 'html_css/materialize_quiz.html')
+
+
+# def handler404(request):
+#     return render(request, 'html_css/handler.html', status=404)
+
+
+# def handler500(request):
+#     return render(request, 'html_css/handler.html', status=500)
+
+
+# def handler403(request):
+#     return render(request, 'html_css/handler.html', status=403)
+
+
+# def handler400(request):
+#     return render(request, 'html_css/handler.html', status=400)
+# # 500
+# # 403
+# # 400
