@@ -16,6 +16,8 @@
 
     #body_container {
         background-image: url("{% static 'html_css/cat_looking_up.jpeg' %}");
+        -webkit-transition: background-image 2s ease-in-out;
+        transition: background-image 2s ease-in-out;
         background-position: center;
         background-repeat: no-repeat;
         height: 800px;
@@ -30,8 +32,17 @@
         background-color: bisque;
         border-radius: 5px;
         font-size: 18pt;
-        padding: 3px;
+        color: white;
+        background-color: rgb(76, 175, 80);
+        border: 2px solid rgb(46, 146, 40);
+        border: 1px solid black;
+        border-radius: 5px;
+        padding: 5px;
         text-align: center;
+    }
+
+    #title:hover {
+        cursor: default;
     }
 
     #div_title {
@@ -39,25 +50,62 @@
         justify-content: center;
     }
 
-    .a_btn {
-        position: relative;
-        right: 50%;
-        top: -10%;
-        color: black;
+    #continue_button {
+        display: none;
+        width: fit-content;
         text-decoration: none;
-        background-color: bisque;
-        border: 1px solid ivory;
-        border-radius: 3px;
+        color: white;
+        background-color: rgb(76, 175, 80);
+        border: 2px solid rgb(46, 146, 40);
+        border: 1px solid black;
+        border-radius: 5px;
+        padding: 5px;
+    }
+
+    #continue_button:hover {
+        background-color: rgb(46, 145, 40);
         transition: 0.3s;
-        padding: 2px;
     }
 
-    .a_btn:hover {
-        background-color: ivory;
+    #continue_button:visited {
+        color: white;
     }
 
-    .a_btn:visited {
-        color: black;
+    #left_side {
+        display: flex;
+        align-items: center;
+    }
+
+    #left_side>img:hover {
+        cursor: pointer;
+    }
+
+    #center {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 85px;
+    }
+
+    #right_side {
+        display: flex;
+        width: 110px !important;
+        align-items: center;
+    }
+
+    #right_side>img:hover {
+        cursor: pointer;
+    }
+
+    #choice>p {
+        display: none;
+    }
+
+    #choice {
+        background-color: azure;
+        border: 1px solid black;
+        border-radius: 3px;
     }
 
     @media only screen and (max-width: 1000px) {
@@ -67,8 +115,15 @@
         }
 
         #right_side {
-            display: flex;
-            flex-direction: row-reverse;
+            align-items: flex-start;
+        }
+
+        #left_side {
+            align-items: flex-start;
+        }
+
+        #center {
+            align-items: flex-end;
         }
 
         #right_side>img {
@@ -89,13 +144,50 @@
         <span id="title">Select From The Following Experiences:</span>
     </div>
     <div id="body_container">
-        <div id="left_side" class="side"><img src="{% static 'html_css/treats1.jpg' %}" alt="Materialize"><a
-                class="a_btn" href="{% url 'html_css:materialize_index' %}">Materialize</a>
+        <div id="left_side" class="side"><img id="left_side_picture" src="{% static 'html_css/treats1.jpg' %}"
+                alt="Materialize">
         </div>
-        <div id="right_side" class="side"><img src="{% static 'html_css/treats2.jpg' %}" alt="Bootstrap"><a
-                class="a_btn" href="{% url 'html_css:bootstrap_index' %}">Bootstrap</a>
+        <div id="center">
+            <div id="choice">
+                <p id="materialize_choice">You have selected Materialize. All HTML/JS demos are available through
+                    either Materialize or Bootstrap factored portfolio to demonstrate flexibility to work within
+                    frameworks. This page was built with no front-end or JavaScript framework to demonstrate basic
+                    capabilities.</p>
+                <p id="bootstrap_choice">You have selected Bootstrap. All HTML/JS demos are available through either
+                    Materialize or Bootstrap factored portfolio to demonstrate flexibility to work within
+                    frameworks. This page was built with no front-end or JavaScript framework to demonstrate basic
+                    capabilities.</p>
+            </div>
+            <a href="#!" class="button" id="continue_button">Continue</a>
+        </div>
+        <div id="right_side" class="side"><img id="right_side_picture" src="{% static 'html_css/treats2.jpg' %}"
+                alt="Bootstrap">
         </div>
     </div>
+    <script>
+        let left_side = document.querySelector('#left_side')
+        let right_side = document.querySelector('#right_side')
+        let continue_button = document.querySelector('#continue_button')
+        let body_container = document.querySelector('#body_container')
+        let right_side_picture = document.querySelector('#right_side_picture')
+        let left_side_picture = document.querySelector('#left_side_picture')
+        let materialize_choice = document.querySelector('#materialize_choice')
+        let bootstrap_choice = document.querySelector('#bootstrap_choice')
+        left_side.onclick = _ => {
+            body_container.style.backgroundImage = "url('{% static 'html_css/peaking_cat.jpg' %}')"
+            continue_button.style.display = 'inline'
+            right_side_picture.style.display = 'none'
+            materialize_choice.style.display = 'inline-block'
+            document.querySelector('#continue_button').href = "{% url 'html_css:materialize_index' %}"
+        }
+        right_side.onclick = _ => {
+            body_container.style.backgroundImage = "url('{% static 'html_css/choice_cat.png' %}')"
+            continue_button.style.display = 'inline'
+            left_side_picture.style.display = 'none'
+            bootstrap_choice.style.display = 'inline-block'
+            document.querySelector('#continue_button').href = "{% url 'html_css:bootstrap_index' %}"
+        }
+    </script>
 </body>
 
 </html>
