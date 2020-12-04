@@ -15,7 +15,7 @@ SECRET_KEY = secrets.django_secret_key
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mcbridz.pythonanywhere.com', ]
+ALLOWED_HOSTS = ['mcbridz.pythonanywhere.com', 'localhost']
 
 
 # Application definition

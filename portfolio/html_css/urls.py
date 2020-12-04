@@ -3,6 +3,7 @@ from . import views
 
 app_name = 'html_css'
 urlpatterns = [
+    path('', views.landing, name="blank_landing"),
     path('landing/', views.landing, name='landing'),
     path('bootstrap/index/', views.bootstrap_index, name='bootstrap_index'),
     path('bootstrap/axios_ajax_vue_demo/', views.cats, name='cats'),
