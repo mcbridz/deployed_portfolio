@@ -10,7 +10,7 @@
 }
 @media only screen and (max-width: 992px) {
   .slideshow-container img {
-    max-width: 370px;
+    max-width: 100%;
   }
 }
 

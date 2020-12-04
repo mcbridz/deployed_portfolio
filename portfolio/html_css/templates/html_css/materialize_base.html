@@ -33,12 +33,33 @@
             padding-right: 15px;
         }
 
+        #container_bottom_nav {
+            margin-top: 15px;
+        }
+
         #nav_bottom {
             display: flex;
             justify-content: center;
+            /* bottom: 0; */
             width: 100%;
             background-color: rgba(255, 255, 240, 0.5);
             border-radius: 7px;
+        }
+
+        #nav_bottom>span {
+            margin: 5px;
+        }
+
+        .social_media {
+            width: 30px;
+        }
+
+        @media only screen and (max-width: 992px) {
+            nav .brand-logo {
+                display: flex;
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
     {% block style %}
