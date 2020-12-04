@@ -27,19 +27,42 @@
         crossorigin="anonymous"></script>
     <link rel="icon" href="{% static 'html_css/viking_logo.jpg' %}">
 
-    <!-- font awesome -->
-    <script src="https://kit.fontawesome.com/fce573833e.js" crossorigin="anonymous"></script>
+
 
     <title>{%block title%}{%endblock%}</title>
 
     {% block style %}
     {%endblock%}
+    <style>
+        #container_bottom_nav {
+            margin-top: 15px;
+        }
+
+        #nav_bottom {
+            display: flex;
+            justify-content: center;
+            /* bottom: 0; */
+            width: 100%;
+            background-color: rgba(255, 255, 240, 0.5);
+            border-radius: 7px;
+        }
+
+        #nav_bottom>span {
+            margin: 5px;
+        }
+
+        .social_media {
+            width: 30px;
+            height: 30px !important;
+        }
+    </style>
 </head>
 
 <body>
 
     {%block body%}
     {%endblock%}
+    {% include 'html_css/bootstrap_bottom_nav.html' %}
 
     {%block javascript%}
     {%endblock%}
