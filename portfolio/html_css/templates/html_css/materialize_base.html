@@ -32,6 +32,14 @@
             padding-left: 15px;
             padding-right: 15px;
         }
+
+        #nav_bottom {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            background-color: rgba(255, 255, 240, 0.5);
+            border-radius: 7px;
+        }
     </style>
     {% block style %}
     {%endblock%}
@@ -41,6 +49,7 @@
     {% include 'html_css/materialize_base_nav.html' %}
     {%block body%}
     {%endblock%}
+    {% include 'html_css/materialize_bottom_nav.html' %}
 
     <!--JavaScript at end of body for optimized loading-->
     <script type="text/javascript"

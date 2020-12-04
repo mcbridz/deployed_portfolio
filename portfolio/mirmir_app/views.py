@@ -506,7 +506,7 @@ def email_sent(request):
 @login_required
 def send_new_code(request):
     # verification = request.user.profile.email_confirmations.objects.all()
-    print(verification)
+    # print(verification)
     # if verification is not None:
     #     verification.delete()
     email_confirmation = EmailConfirmation(
