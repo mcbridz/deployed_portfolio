@@ -25,20 +25,7 @@
     <script src="https://kit.fontawesome.com/fce573833e.js" crossorigin="anonymous"></script>
 
     <link rel="icon" href="{% static 'html_css/viking_logo.jpg' %}">
-    <meta prefix="og: http://ogp.me/ns#" name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="Zachary McBride's Portfolio" />
-    <meta prefix="og: http://ogp.me/ns#" property="og:type" content="website" />
-    <meta prefix="og: http://ogp.me/ns#" property="og:url" content="http://mcbridz.pythonanywhere.com" />
-    <meta prefix="og: http://ogp.me/ns#" property="og:image" content="{% static 'html_css/portfolio.png' %}" />
-    <meta prefix="og: http://ogp.me/ns#" property="og:image:type" content="image/png" />
-    <meta prefix="og: http://ogp.me/ns#" proptery="og:description"
-        content="Working portfolio demonstrating accrued skills and frameworks for Zachary McBride." />
-    <meta name="twitter:card" content="{% static 'html_css/portfolio_image.png' %}" />
-    <meta name="twitter:site" content="@mcbridz" />
-    <meta name="twitter:domain" content="http://mcbridz.pythonanywhere.com" />
-    <meta name="twitter:title" content="Zachary McBride's Portfolio" />
-    <meta name="twitter:description"
-        content="Working portfolio demonstrating accrued skills and frameworks for Zachary McBride.">
+    {% include 'html_css/metadata.html' %}
     <title>{%block title%}{%endblock%}</title>
     <style>
         .nav-extended {
