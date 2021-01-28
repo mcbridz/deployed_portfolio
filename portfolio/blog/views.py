@@ -259,7 +259,7 @@ def register(request):
         new_profile.save()
         return HttpResponseRedirect(reverse('blog_app:profile'))
     context = {
-        'site_key': settings.RECAPTCHA_SITE_KEY
+        'site_key': settings.RECAPTCHA_SITE_KEY,
     }
     return render(request, 'blog/registration.html', context)
 
