@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = secrets.django_secret_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['mcbridz.pythonanywhere.com', 'localhost']
 
@@ -118,6 +118,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATICSERVE_DIRS = [
+    BASE_DIR / "static",
+    '/portfolio/static',
+]
 
 # reCAPTCHA settings
 RECAPTCHA_SITE_KEY = '6LdLbdQZAAAAAFPUDUmXHIDFo7tjwHyUDb40W-lG'

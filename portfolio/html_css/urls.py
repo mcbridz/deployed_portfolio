@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 app_name = 'html_css'
 urlpatterns = [
@@ -35,4 +37,4 @@ urlpatterns = [
          name='materialize_weather'),
     path('materialize/quiz/', views.materialize_quiz, name='materialize_quiz'),
     #     path('error_handling/', views.handler, name='handler'),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

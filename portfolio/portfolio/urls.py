@@ -26,7 +26,7 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('library/', include('library.urls')),
     path('mirmir/', include('mirmir_app.urls')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.PROFILE_PIC_URL, document_root=settings.PROFILE_PIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.PROFILE_PIC_URL, document_root=settings.PROFILE_PIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # handler404 = 'html_css.views.handler404'
 # handler500 = 'html_css.views.handler500'
