@@ -8,9 +8,17 @@
     <title>Canvas</title>    
     <link rel="icon" href="{% static 'html_css/viking_logo.jpg' %}">
     {% include 'html_css/metadata.html' %}
+    <style>
+        body {
+            margin: 0;
+        }
+        #main_canvas {
+            background: lightgray;
+        }
+    </style>
 </head>
 <body>
     <canvas id="main_canvas"></canvas>
-    <script src=""></script>
+    <script src="{% static 'html_css/canvas_landing.js' %}"></script>
 </body>
 </html>
