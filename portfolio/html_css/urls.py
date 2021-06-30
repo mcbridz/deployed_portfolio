@@ -36,5 +36,6 @@ urlpatterns = [
     path('materialize/weather/', views.materialize_weather,
          name='materialize_weather'),
     path('materialize/quiz/', views.materialize_quiz, name='materialize_quiz'),
+    path('canvas/', views.canvas, name='canvas_landing'),
     #     path('error_handling/', views.handler, name='handler'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

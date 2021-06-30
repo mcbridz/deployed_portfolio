@@ -85,6 +85,8 @@ def materialize_weather(request):
 def materialize_quiz(request):
     return render(request, 'html_css/materialize_quiz.html')
 
+def canvas(request):
+    return render(request, 'html_css/canvas.html')
 
 # def handler404(request):
 #     return render(request, 'html_css/handler.html', status=404)
